@@ -34,7 +34,7 @@ export default function Footer() {
           <span className="text-white/20">/</span>
           <Link to="/resale" className="hover:text-[#00F5D4] transition">5-Month Resale</Link>
           <span className="text-white/20">/</span>
-          <Link to="/guide" className="hover:text-[#00F5D4] transition">Architecture Defense</Link>
+          <Link to="/guide" className="hover:text-[#00F5D4] transition">Silicon Taxonomy</Link>
         </div>
 
         {/* Tech Badges */}

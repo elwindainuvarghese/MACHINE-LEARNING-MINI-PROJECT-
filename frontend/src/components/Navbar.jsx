@@ -29,7 +29,7 @@ export default function Navbar() {
     { to: "/arena", label: "Model Arena", icon: Trophy },
     { to: "/manifold", label: "3D Manifolds", icon: Network },
     { to: "/resale", label: "5-Month Resale", icon: TrendingDown },
-    { to: "/guide", label: "Architecture Defense", icon: BookOpen },
+    { to: "/guide", label: "Silicon Taxonomy", icon: BookOpen },
   ];
 
   return (
