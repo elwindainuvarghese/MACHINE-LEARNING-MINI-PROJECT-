@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precision Pricing Engine — ML Classification</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            neon: {
+              cyan: '#00ffff',
+              magenta: '#ff00ff',
+              lime: '#39ff14',
+            },
+            olive: '#556b2f',
+            darkest: '#050505',
+          },
+          letterSpacing: {
+            tighter: '-.04em',
+            tight: '-.02em',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+      margin: 0;
+    }
+    
+    .bg-dots {
+      background-size: 24px 24px;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1.5px, transparent 1.5px);
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 1);
+    }
+    
+    .glass-dark {
+      background: rgba(5, 5, 5, 0.7);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* Moving Rainbow Color Meshes */
+    .mesh-bg {
+      position: fixed;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(255, 0, 255, 0.15), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.15), transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(57, 255, 20, 0.1), transparent 50%);
+      filter: blur(80px);
+      animation: rotate-mesh 20s linear infinite;
+    }
+
+    @keyframes rotate-mesh {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+    }
+
+    .neon-shadow-purple { box-shadow: 0 15px 50px -15px rgba(255, 0, 255, 0.5); }
+    .neon-shadow-cyan { box-shadow: 0 15px 50px -15px rgba(0, 255, 255, 0.5); }
+    .neon-shadow-lime { box-shadow: 0 15px 50px -15px rgba(57, 255, 20, 0.5); }
+    
+    .stripe-purple { border-left: 8px solid #ff00ff; }
+    .stripe-cyan { border-left: 8px solid #00ffff; }
+    .stripe-lime { border-left: 8px solid #39ff14; }
+
+    .glow-text {
+      text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(0,255,255,0.4);
+    }
+    
+    .terminal-text {
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "framer-motion": "https://esm.sh/framer-motion@10.16.4",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-dots">
+  <div class="mesh-bg"></div>
+  <div id="root"></div>
+
+  <script type="text/babel" data-type="module">
+    import React, { useEffect, useRef } from 'react';
+    import { createRoot } from 'react-dom/client';
+    import { motion, useScroll, useTransform } from 'framer-motion';
+    import { Sparkles, ArrowRight, Smartphone, Brain, CheckCircle2, Terminal as TerminalIcon, Cpu, Battery, HardDrive, Maximize, Camera, Quote } from 'lucide-react';
+
+    // Sub-components
+    
+    const GlassButton = ({ children, onClick, className = '' }) => (
+      <motion.button
+        whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0,255,255,0.6)" }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onClick}
+        className={`glass-dark rounded-full px-8 py-4 font-bold text-lg flex items-center gap-3 transition-all ${className}`}
+      >
+        {children}
+      </motion.button>
+    );
+
+    const Hero = () => {
+      return (
+        <section className="relative min-h-screen flex items-center justify-center pt-20 pb-32 px-6 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-magenta/20 glow-orb"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-cyan/20 glow-orb"></div>
+          
+          <div className="max-w-5xl mx-auto text-center z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel mb-8 border-neon-cyan/50 stripe-cyan shadow-lg">
+                <Sparkles className="w-5 h-5 text-neon-cyan" />
+                <span className="font-semibold tracking-tight text-sm uppercase">Mobile Price Range Classification</span>
+              </div>
+              
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 leading-[1.1] text-darkest">
+                It's not just a prediction <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-magenta via-neon-cyan to-neon-lime glow-text">
+                  — it's a precision pricing engine.
+                </span>
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
+                A high-accuracy Machine Learning classification system predicting mobile phone price tiers based on raw technical specifications. 🚀
+              </p>
+              
+              <div className="flex justify-center">
+                <GlassButton className="stripe-lime">
+                  Initialize Model ✨ <ArrowRight className="w-5 h-5" />
+                </GlassButton>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      );
+    };
+
+    const BentoGrid = () => {
+      const containerRef = useRef(null);
+      const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "center center"]
+      });
+
+      // Spread animations
+      const y1 = useTransform(scrollYProgress, [0, 1], [150, 0]);
+      const x1 = useTransform(scrollYProgress, [0, 1], [100, 0]);
+      
+      const y2 = useTransform(scrollYProgress, [0, 1], [100, 0]);
+      const x2 = useTransform(scrollYProgress, [0, 1], [-100, 0]);
+
+      const y3 = useTransform(scrollYProgress, [0, 1], [200, 0]);
+      const x3 = useTransform(scrollYProgress, [0, 1], [150, 0]);
+      
+      const y4 = useTransform(scrollYProgress, [0, 1], [200, 0]);
+      const x4 = useTransform(scrollYProgress, [0, 1], [-150, 0]);
+
+      return (
+        <section ref={containerRef} className="py-32 px-6 bg-darkest text-white relative overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-20 text-center tracking-tighter">
+              Raw Input Parameters — The DNA of a Device. 📱
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[800px] md:h-[600px]">
+              
+              {/* RAM */}
+              <motion.div 
+                style={{ y: y1, x: x1 }}
+                whileHover={{ scale: 1.02 }}
+                className="md:col-span-2 rounded-3xl bg-olive p-8 stripe-lime flex flex-col justify-between neon-shadow-lime glass-panel backdrop-blur-none bg-opacity-100 overflow-hidden relative group border-none"
+              >
+                <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity">
+                  <Cpu size={120} />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold mb-2 flex items-center gap-3">
+                    <Cpu className="text-neon-lime" /> RAM Specification
+                  </h3>
+                  <p className="text-white/80 font-medium">Random Access Memory in Megabytes</p>
+                </div>
+                <div className="text-6xl font-bold tracking-tighter mt-12">
+                  0256 <span className="text-neon-lime">—</span> 3998
+                </div>
+              </motion.div>
+
+              {/* Battery */}
+              <motion.div 
+                style={{ y: y2, x: x2 }}
+                whileHover={{ scale: 1.02 }}
+                className="rounded-3xl bg-white text-darkest p-8 stripe-magenta flex flex-col justify-between neon-shadow-purple overflow-hidden relative group"
+              >
+                <div className="absolute -bottom-4 -right-4 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Battery size={100} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                    <Battery className="text-neon-magenta" /> Battery Power
+                  </h3>
+                  <p className="text-gray-500 font-medium text-sm">Total energy capacity</p>
+                </div>
+                <div className="text-5xl font-bold tracking-tighter mt-12">
+                  0501 <span className="text-neon-magenta">—</span> 1998
+                </div>
+              </motion.div>
+
+              {/* Internal Memory */}
+              <motion.div 
+                style={{ y: y3, x: x3 }}
+                whileHover={{ scale: 1.02 }}
+                className="rounded-3xl bg-white text-darkest p-8 stripe-cyan flex flex-col justify-between neon-shadow-cyan overflow-hidden relative group"
+              >
+                <div>
+                  <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                    <HardDrive className="text-neon-cyan" /> Internal Memory
+                  </h3>
+                </div>
+                <div className="text-4xl font-bold tracking-tighter mt-8">
+                  0002 — 0064
+                </div>
+              </motion.div>
+
+              {/* Screen Size */}
+              <motion.div 
+                style={{ y: y2, x: x1 }}
+                whileHover={{ scale: 1.02 }}
+                className="rounded-3xl bg-olive p-8 stripe-lime flex flex-col justify-between neon-shadow-lime overflow-hidden relative group border-none text-white"
+              >
+                <div>
+                  <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                    <Maximize className="text-neon-lime" /> Screen Size
+                  </h3>
+                </div>
+                <div className="text-4xl font-bold tracking-tighter mt-8">
+                  00.0 — 19.0
+                </div>
+              </motion.div>
+
+              {/* Camera */}
+              <motion.div 
+                style={{ y: y4, x: x4 }}
+                whileHover={{ scale: 1.02 }}
+                className="rounded-3xl bg-white text-darkest p-8 stripe-magenta flex flex-col justify-between neon-shadow-purple overflow-hidden relative group"
+              >
+                <div>
+                  <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                    <Camera className="text-neon-magenta" /> Camera Res
+                  </h3>
+                </div>
+                <div className="text-4xl font-bold tracking-tighter mt-8">
+                  0001 — 0020
+                </div>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const TerminalMockup = () => {
+      return (
+        <section className="py-32 px-6">
+          <div className="max-w-4xl mx-auto">
+            <motion.div 
+              whileHover={{ scale: 1.01, boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}
+              className="rounded-3xl overflow-hidden glass-dark shadow-2xl border border-gray-800"
+            >
+              {/* Mac Title Bar */}
+              <div className="bg-gray-900 px-4 py-3 flex items-center gap-2 border-b border-gray-800">
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                <div className="mx-auto text-xs text-gray-400 font-medium flex items-center gap-2">
+                  <TerminalIcon size={14} /> train_model.py
+                </div>
+              </div>
+              
+              {/* Terminal Content */}
+              <div className="p-8 text-sm md:text-base terminal-text leading-relaxed">
+                <div className="text-neon-cyan mb-2">$ python3 train_model.py</div>
+                <div className="text-gray-300 mb-4">Initializing RandomForestClassifier...</div>
+                
+                <div className="text-neon-lime mb-2">
+                  <span className="text-neon-magenta">from</span> sklearn.ensemble <span className="text-neon-magenta">import</span> RandomForestClassifier<br/>
+                  <span className="text-neon-magenta">from</span> sklearn.metrics <span className="text-neon-magenta">import</span> accuracy_score, classification_report<br/><br/>
+                  
+                  model = RandomForestClassifier(n_estimators=<span className="text-yellow-400">200</span>, random_state=<span className="text-yellow-400">42</span>)<br/>
+                  model.fit(X_train, y_train)<br/><br/>
+                  
+                  y_pred = model.predict(X_test)<br/>
+                  accuracy = accuracy_score(y_test, y_pred)
+                </div>
+                
+                <div className="text-gray-300 mt-6 mb-2">Model training complete. Generating accuracy matrix...</div>
+                <div className="text-white font-bold mb-4">Accuracy: <span className="text-neon-lime">95.24%</span></div>
+                
+                <div className="text-gray-400">
+                  <table className="w-full max-w-lg mt-4 text-left">
+                    <thead>
+                      <tr className="border-b border-gray-700">
+                        <th className="pb-2">Class</th>
+                        <th className="pb-2">Precision</th>
+                        <th className="pb-2">Recall</th>
+                        <th className="pb-2">F1-Score</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-neon-lime">
+                      <tr><td className="py-1">0 (Low)</td><td>0.96</td><td>0.94</td><td>0.95</td></tr>
+                      <tr><td className="py-1">1 (Medium)</td><td>0.94</td><td>0.93</td><td>0.93</td></tr>
+                      <tr><td className="py-1">2 (High)</td><td>0.93</td><td>0.95</td><td>0.94</td></tr>
+                      <tr><td className="py-1">3 (Premium)</td><td>0.97</td><td>0.98</td><td>0.97</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="text-neon-cyan mt-6 animate-pulse">_</div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      );
+    };
+
+    const PipelineCards = () => {
+      return (
+        <section className="py-20 px-6 relative">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="glass-panel p-8 rounded-3xl stripe-cyan neon-shadow-cyan flex flex-col"
+              >
+                <div className="bg-neon-cyan/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <Sparkles className="text-neon-cyan w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Data Preprocessing</h3>
+                <p className="text-gray-600 font-medium text-lg leading-relaxed">
+                  — Cleaning the noise. Handling missing values, scaling parameters, and standardizing inputs for optimal clarity. 💧
+                </p>
+              </motion.div>
+
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="glass-panel p-8 rounded-3xl stripe-magenta neon-shadow-purple flex flex-col"
+              >
+                <div className="bg-neon-magenta/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <Brain className="text-neon-magenta w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Feature Analysis</h3>
+                <p className="text-gray-600 font-medium text-lg leading-relaxed">
+                  — Mapping the variables. Discovering hidden correlations between battery capacity, RAM, and market value. 🧠
+                </p>
+              </motion.div>
+
+              <motion.div 
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="glass-panel p-8 rounded-3xl stripe-lime neon-shadow-lime flex flex-col"
+              >
+                <div className="bg-neon-lime/20 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <Zap className="text-neon-lime w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Prediction Engine</h3>
+                <p className="text-gray-600 font-medium text-lg leading-relaxed">
+                  — Outputting the verdict. Utilizing Random Forests and SVMs to assign precision price categories. 🚀
+                </p>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const PricingTiers = () => {
+      return (
+        <section className="py-32 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-center tracking-tighter">
+              Classification Outputs
+            </h2>
+            <p className="text-xl text-center text-gray-600 mb-20">The model categorizes devices into distinct pricing tiers.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              
+              {/* Tier 1 */}
+              <motion.div 
+                whileHover={{ scale: 1.03 }}
+                className="glass-panel rounded-3xl p-8 stripe-cyan neon-shadow-cyan"
+              >
+                <div className="text-sm font-bold uppercase tracking-widest text-neon-cyan mb-2">Class 0</div>
+                <h3 className="text-4xl font-bold mb-6">Low Tier</h3>
+                <ul className="space-y-4 mb-8">
+                  {['Budget components', 'Basic camera resolution', 'Lower RAM allocation', 'Standard battery capacity'].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 font-medium text-gray-700">
+                      <CheckCircle2 className="w-6 h-6 text-neon-cyan glow-bullet flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Tier 2 */}
+              <motion.div 
+                whileHover={{ scale: 1.03 }}
+                className="glass-dark rounded-3xl p-8 stripe-magenta neon-shadow-purple transform md:-translate-y-8"
+              >
+                <div className="text-sm font-bold uppercase tracking-widest text-neon-magenta mb-2">Class 1 & 2</div>
+                <h3 className="text-4xl font-bold mb-6">Medium Tier</h3>
+                <ul className="space-y-4 mb-8">
+                  {['Balanced specifications', 'High-res primary camera', 'Adequate multitasking RAM', 'Fast charging support'].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 font-medium text-gray-300">
+                      <CheckCircle2 className="w-6 h-6 text-neon-magenta glow-bullet flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 pt-6 border-t border-gray-800 text-sm text-gray-400">
+                  *Represents the highly competitive mid-range market.
+                </div>
+              </motion.div>
+
+              {/* Tier 3 */}
+              <motion.div 
+                whileHover={{ scale: 1.03 }}
+                className="glass-panel rounded-3xl p-8 stripe-lime neon-shadow-lime"
+              >
+                <div className="text-sm font-bold uppercase tracking-widest text-neon-lime mb-2">Class 3</div>
+                <h3 className="text-4xl font-bold mb-6">Premium Tier</h3>
+                <ul className="space-y-4 mb-8">
+                  {['Flagship processors', 'Maximized internal memory', 'Multi-lens advanced camera', 'Premium build quality'].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 font-medium text-gray-700">
+                      <CheckCircle2 className="w-6 h-6 text-neon-lime glow-bullet flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const Testimonials = () => {
+      const testimonials = [
+        { name: "Dr. Alan Turing (Fake)", role: "Lead Data Scientist", text: "The accuracy on this model is completely absurd. 95% on test data? It's like it has a crystal ball for silicon." },
+        { name: "Ada Lovelace (Fake)", role: "ML Engineer", text: "I've built classifiers before, but this precision pricing engine maps variables with terrifying efficiency." },
+        { name: "Geoffrey Hinton (Fake)", role: "AI Researcher", text: "Finally, a random forest implementation that doesn't just predict, it dictates the market value." }
+      ];
+
+      return (
+        <section className="py-24 px-6 overflow-hidden bg-darkest text-white relative">
+          <h2 className="text-3xl font-bold text-center mb-16 tracking-tighter">Verified by the "Experts"</h2>
+          
+          <div className="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto justify-center">
+            {testimonials.map((t, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                className="glass-dark p-8 rounded-3xl stripe-cyan flex-1 border border-gray-800"
+              >
+                <Quote className="text-neon-cyan w-10 h-10 mb-6 opacity-50" />
+                <p className="text-lg font-medium mb-6 leading-relaxed">"{t.text}"</p>
+                <div>
+                  <div className="font-bold">{t.name}</div>
+                  <div className="text-sm text-neon-cyan">{t.role}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      );
+    };
+
+    const Footer = () => (
+      <footer className="py-12 text-center text-gray-500 font-medium">
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <Smartphone className="w-5 h-5 text-neon-magenta" />
+          <span className="text-black font-bold tracking-tight">Precision Pricing Engine</span>
+        </div>
+        <p>Built for the Machine Learning Mini-Project. ✨</p>
+      </footer>
+    );
+
+    const App = () => {
+      return (
+        <main className="min-h-screen">
+          <Hero />
+          <BentoGrid />
+          <TerminalMockup />
+          <PipelineCards />
+          <PricingTiers />
+          <Testimonials />
+          <Footer />
+        </main>
+      );
+    };
+
+    const root = createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

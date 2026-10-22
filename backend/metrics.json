@@ -1,0 +1,1200 @@
+{
+  "models_comparison": [
+    {
+      "name": "Gradient Boosting",
+      "accuracy": 89.0,
+      "precision": 89.11,
+      "recall": 89.0,
+      "f1": 88.99
+    },
+    {
+      "name": "Random Forest (Ensemble)",
+      "accuracy": 87.6,
+      "precision": 87.91,
+      "recall": 87.6,
+      "f1": 87.59
+    },
+    {
+      "name": "Logistic Regression",
+      "accuracy": 87.6,
+      "precision": 87.96,
+      "recall": 87.6,
+      "f1": 87.64
+    },
+    {
+      "name": "SVM (Linear Kernel)",
+      "accuracy": 86.8,
+      "precision": 87.0,
+      "recall": 86.8,
+      "f1": 86.83
+    },
+    {
+      "name": "Naive Bayes (Gaussian)",
+      "accuracy": 84.8,
+      "precision": 85.33,
+      "recall": 84.8,
+      "f1": 84.89
+    },
+    {
+      "name": "Decision Tree (Entropy)",
+      "accuracy": 83.2,
+      "precision": 83.5,
+      "recall": 83.2,
+      "f1": 83.27
+    },
+    {
+      "name": "KNN (k=9, Distance)",
+      "accuracy": 50.2,
+      "precision": 52.99,
+      "recall": 50.2,
+      "f1": 51.06
+    }
+  ],
+  "best_model": "Random Forest (Ensemble)",
+  "best_accuracy": 87.6,
+  "metrics_summary": {
+    "accuracy": 87.6,
+    "precision": 87.91,
+    "recall": 87.6,
+    "f1_score": 87.59
+  },
+  "confusion_matrix": {
+    "matrix": [
+      [
+        112,
+        13,
+        0,
+        0
+      ],
+      [
+        7,
+        112,
+        6,
+        0
+      ],
+      [
+        0,
+        16,
+        97,
+        12
+      ],
+      [
+        0,
+        0,
+        8,
+        117
+      ]
+    ],
+    "labels": [
+      "Low (0)",
+      "Medium (1)",
+      "High (2)",
+      "Very High (3)"
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "ram",
+      "label": "RAM (Memory)",
+      "importance": 54.63
+    },
+    {
+      "feature": "battery_power",
+      "label": "Battery Capacity (mAh)",
+      "importance": 5.63
+    },
+    {
+      "feature": "px_height",
+      "label": "Pixel Height",
+      "importance": 4.38
+    },
+    {
+      "feature": "px_width",
+      "label": "Pixel Width",
+      "importance": 4.13
+    },
+    {
+      "feature": "mobile_wt",
+      "label": "Chassis Weight (g)",
+      "importance": 3.5
+    },
+    {
+      "feature": "int_memory",
+      "label": "Internal Storage (GB)",
+      "importance": 3.35
+    },
+    {
+      "feature": "clock_speed",
+      "label": "CPU Clock (GHz)",
+      "importance": 2.91
+    },
+    {
+      "feature": "sc_w",
+      "label": "Screen Width (cm)",
+      "importance": 2.83
+    }
+  ],
+  "feature_selection_experiment": {
+    "all_features_count": 20,
+    "all_features_accuracy": 87.6,
+    "top_features_count": 5,
+    "top_features_accuracy": 85.8,
+    "top_selected_features": [
+      "Battery Capacity (mAh)",
+      "Pixel Width",
+      "RAM (Memory)",
+      "Screen Width (cm)",
+      "Talk Time (hrs)"
+    ],
+    "accuracy_delta": -1.8
+  },
+  "pca_analysis": {
+    "explained_variance": [
+      6.04,
+      5.78
+    ],
+    "total_variance_explained": 11.82,
+    "scatter_points": [
+      {
+        "x": -0.47,
+        "y": 0.59,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 372,
+        "battery": 1225
+      },
+      {
+        "x": 0.33,
+        "y": 0.1,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2296,
+        "battery": 779
+      },
+      {
+        "x": -1.29,
+        "y": -1.24,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2195,
+        "battery": 506
+      },
+      {
+        "x": -0.16,
+        "y": -0.85,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 702,
+        "battery": 748
+      },
+      {
+        "x": -0.22,
+        "y": 1.31,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3489,
+        "battery": 1787
+      },
+      {
+        "x": 0.6,
+        "y": 0.53,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1935,
+        "battery": 1947
+      },
+      {
+        "x": -0.02,
+        "y": -0.98,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3351,
+        "battery": 1382
+      },
+      {
+        "x": 0.4,
+        "y": 1.65,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1563,
+        "battery": 1636
+      },
+      {
+        "x": -1.12,
+        "y": 0.81,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1498,
+        "battery": 1978
+      },
+      {
+        "x": 1.06,
+        "y": 0.88,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 1105,
+        "battery": 1313
+      },
+      {
+        "x": 1.08,
+        "y": -2.4,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2260,
+        "battery": 741
+      },
+      {
+        "x": -1.39,
+        "y": 0.9,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 1362,
+        "battery": 1299
+      },
+      {
+        "x": 2.39,
+        "y": -1.25,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3300,
+        "battery": 919
+      },
+      {
+        "x": 0.16,
+        "y": -0.96,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 936,
+        "battery": 1198
+      },
+      {
+        "x": 1.25,
+        "y": 1.1,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3663,
+        "battery": 1846
+      },
+      {
+        "x": -0.8,
+        "y": 0.07,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3247,
+        "battery": 1683
+      },
+      {
+        "x": 1.35,
+        "y": -1.54,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3115,
+        "battery": 1776
+      },
+      {
+        "x": 0.02,
+        "y": 1.56,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2611,
+        "battery": 1002
+      },
+      {
+        "x": 0.56,
+        "y": 1.03,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3020,
+        "battery": 1612
+      },
+      {
+        "x": 0.17,
+        "y": 1.67,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2497,
+        "battery": 1233
+      },
+      {
+        "x": -0.75,
+        "y": -1.55,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3605,
+        "battery": 1884
+      },
+      {
+        "x": -1.13,
+        "y": -1.31,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3696,
+        "battery": 1918
+      },
+      {
+        "x": -0.25,
+        "y": -0.31,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3978,
+        "battery": 852
+      },
+      {
+        "x": 0.34,
+        "y": -0.3,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 2984,
+        "battery": 1933
+      },
+      {
+        "x": -0.36,
+        "y": -0.28,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 994,
+        "battery": 1596
+      },
+      {
+        "x": 1.12,
+        "y": -0.54,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 411,
+        "battery": 687
+      },
+      {
+        "x": 0.97,
+        "y": -1.34,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2516,
+        "battery": 1507
+      },
+      {
+        "x": 1.14,
+        "y": 0.42,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 3078,
+        "battery": 566
+      },
+      {
+        "x": 0.9,
+        "y": 1.5,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1785,
+        "battery": 1668
+      },
+      {
+        "x": -0.53,
+        "y": -0.02,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2192,
+        "battery": 521
+      },
+      {
+        "x": -1.46,
+        "y": 0.69,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 759,
+        "battery": 1453
+      },
+      {
+        "x": 0.66,
+        "y": 0.95,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 2678,
+        "battery": 1797
+      },
+      {
+        "x": 0.62,
+        "y": -0.08,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 3070,
+        "battery": 536
+      },
+      {
+        "x": 0.1,
+        "y": -0.95,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3757,
+        "battery": 1644
+      },
+      {
+        "x": 0.49,
+        "y": -1.19,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3761,
+        "battery": 1350
+      },
+      {
+        "x": 1.56,
+        "y": -0.32,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2523,
+        "battery": 1581
+      },
+      {
+        "x": -0.31,
+        "y": -0.34,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3293,
+        "battery": 1867
+      },
+      {
+        "x": 0.22,
+        "y": 2.2,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 2945,
+        "battery": 1424
+      },
+      {
+        "x": -0.18,
+        "y": 0.16,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2772,
+        "battery": 1688
+      },
+      {
+        "x": 1.85,
+        "y": 0.74,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1747,
+        "battery": 1428
+      },
+      {
+        "x": 1.61,
+        "y": -0.33,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3252,
+        "battery": 1279
+      },
+      {
+        "x": 0.09,
+        "y": -0.49,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2419,
+        "battery": 1893
+      },
+      {
+        "x": -0.36,
+        "y": 0.04,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3147,
+        "battery": 1671
+      },
+      {
+        "x": -0.67,
+        "y": -0.3,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3079,
+        "battery": 1542
+      },
+      {
+        "x": -0.39,
+        "y": -0.71,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2275,
+        "battery": 976
+      },
+      {
+        "x": 0.33,
+        "y": 0.04,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 2992,
+        "battery": 1826
+      },
+      {
+        "x": -3.8,
+        "y": -1.37,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1782,
+        "battery": 1746
+      },
+      {
+        "x": 1.09,
+        "y": 0.09,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1394,
+        "battery": 1528
+      },
+      {
+        "x": -2.5,
+        "y": -0.83,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1549,
+        "battery": 705
+      },
+      {
+        "x": -0.53,
+        "y": 0.2,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1219,
+        "battery": 1825
+      },
+      {
+        "x": 1.2,
+        "y": 2.29,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 773,
+        "battery": 630
+      },
+      {
+        "x": -0.42,
+        "y": -1.23,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2300,
+        "battery": 1454
+      },
+      {
+        "x": -0.31,
+        "y": 0.04,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3906,
+        "battery": 1812
+      },
+      {
+        "x": 0.95,
+        "y": 1.11,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2620,
+        "battery": 501
+      },
+      {
+        "x": 0.8,
+        "y": 1.55,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 362,
+        "battery": 738
+      },
+      {
+        "x": -0.56,
+        "y": 1.4,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1594,
+        "battery": 1174
+      },
+      {
+        "x": 0.7,
+        "y": -0.58,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1321,
+        "battery": 655
+      },
+      {
+        "x": -0.03,
+        "y": 0.04,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3388,
+        "battery": 1670
+      },
+      {
+        "x": -0.51,
+        "y": -0.04,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3716,
+        "battery": 1387
+      },
+      {
+        "x": -0.45,
+        "y": -2.14,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3321,
+        "battery": 1492
+      },
+      {
+        "x": 1.5,
+        "y": -0.61,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 1096,
+        "battery": 607
+      },
+      {
+        "x": 0.19,
+        "y": 0.48,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 293,
+        "battery": 689
+      },
+      {
+        "x": -0.66,
+        "y": 1.02,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 2933,
+        "battery": 1630
+      },
+      {
+        "x": 1.73,
+        "y": -1.34,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3823,
+        "battery": 901
+      },
+      {
+        "x": 2.38,
+        "y": 1.19,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2261,
+        "battery": 523
+      },
+      {
+        "x": 1.03,
+        "y": 0.81,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 3537,
+        "battery": 877
+      },
+      {
+        "x": 0.36,
+        "y": -2.48,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2652,
+        "battery": 1960
+      },
+      {
+        "x": 0.3,
+        "y": 0.92,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3175,
+        "battery": 1382
+      },
+      {
+        "x": 0.3,
+        "y": -1.35,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2102,
+        "battery": 1586
+      },
+      {
+        "x": -0.56,
+        "y": 0.23,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2820,
+        "battery": 715
+      },
+      {
+        "x": 0.49,
+        "y": -0.42,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3688,
+        "battery": 1990
+      },
+      {
+        "x": -0.14,
+        "y": 0.3,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1277,
+        "battery": 1284
+      },
+      {
+        "x": -0.56,
+        "y": -1.19,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2569,
+        "battery": 627
+      },
+      {
+        "x": -0.68,
+        "y": -0.56,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1265,
+        "battery": 828
+      },
+      {
+        "x": -0.22,
+        "y": 0.2,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2233,
+        "battery": 1765
+      },
+      {
+        "x": 0.69,
+        "y": -0.6,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1433,
+        "battery": 729
+      },
+      {
+        "x": -2.24,
+        "y": 0.48,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 592,
+        "battery": 1324
+      },
+      {
+        "x": -1.44,
+        "y": 0.21,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3520,
+        "battery": 1496
+      },
+      {
+        "x": -0.42,
+        "y": 0.24,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3234,
+        "battery": 1779
+      },
+      {
+        "x": 1.71,
+        "y": -0.14,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2119,
+        "battery": 802
+      },
+      {
+        "x": 0.67,
+        "y": 1.52,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2038,
+        "battery": 534
+      },
+      {
+        "x": 0.78,
+        "y": -1.43,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 3390,
+        "battery": 637
+      },
+      {
+        "x": -0.5,
+        "y": 0.46,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1707,
+        "battery": 1540
+      },
+      {
+        "x": 2.11,
+        "y": 0.39,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2959,
+        "battery": 1238
+      },
+      {
+        "x": 0.38,
+        "y": 1.81,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 971,
+        "battery": 1563
+      },
+      {
+        "x": 1.13,
+        "y": 0.39,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 1243,
+        "battery": 671
+      },
+      {
+        "x": 0.07,
+        "y": 0.04,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 1048,
+        "battery": 1015
+      },
+      {
+        "x": 1.03,
+        "y": 0.43,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 734,
+        "battery": 653
+      },
+      {
+        "x": 0.79,
+        "y": -0.64,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3926,
+        "battery": 707
+      },
+      {
+        "x": -0.7,
+        "y": 0.75,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3403,
+        "battery": 828
+      },
+      {
+        "x": -2.51,
+        "y": 0.66,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 2045,
+        "battery": 1693
+      },
+      {
+        "x": 0.34,
+        "y": -0.4,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2553,
+        "battery": 1747
+      },
+      {
+        "x": -2.04,
+        "y": -0.13,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1240,
+        "battery": 1198
+      },
+      {
+        "x": -1.18,
+        "y": 0.23,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 623,
+        "battery": 598
+      },
+      {
+        "x": 1.41,
+        "y": 0.38,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2510,
+        "battery": 1278
+      },
+      {
+        "x": -0.2,
+        "y": -1.07,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2748,
+        "battery": 991
+      },
+      {
+        "x": -2.4,
+        "y": -0.33,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 783,
+        "battery": 1824
+      },
+      {
+        "x": 1.92,
+        "y": 0.18,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3568,
+        "battery": 1163
+      },
+      {
+        "x": -0.78,
+        "y": 0.07,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2785,
+        "battery": 1539
+      },
+      {
+        "x": 0.74,
+        "y": 1.53,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3608,
+        "battery": 1607
+      },
+      {
+        "x": -1.22,
+        "y": 1.02,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1405,
+        "battery": 1549
+      },
+      {
+        "x": -1.01,
+        "y": -2.06,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3873,
+        "battery": 1342
+      },
+      {
+        "x": -1.44,
+        "y": -0.27,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 261,
+        "battery": 1503
+      },
+      {
+        "x": 0.58,
+        "y": -0.18,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1499,
+        "battery": 627
+      },
+      {
+        "x": -1.24,
+        "y": 2.1,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3052,
+        "battery": 1724
+      },
+      {
+        "x": -1.42,
+        "y": -0.52,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 694,
+        "battery": 780
+      },
+      {
+        "x": -2.0,
+        "y": -0.2,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 782,
+        "battery": 1738
+      },
+      {
+        "x": 2.09,
+        "y": -0.26,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3771,
+        "battery": 837
+      },
+      {
+        "x": -0.67,
+        "y": 0.73,
+        "price_range": 1,
+        "tier_label": "Tier 1",
+        "ram": 1184,
+        "battery": 608
+      },
+      {
+        "x": -1.12,
+        "y": 1.44,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3314,
+        "battery": 1104
+      },
+      {
+        "x": 1.06,
+        "y": 0.61,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3785,
+        "battery": 1326
+      },
+      {
+        "x": -1.46,
+        "y": 0.82,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 451,
+        "battery": 1480
+      },
+      {
+        "x": 1.06,
+        "y": 1.51,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 335,
+        "battery": 638
+      },
+      {
+        "x": 2.26,
+        "y": -0.1,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3099,
+        "battery": 1556
+      },
+      {
+        "x": -0.45,
+        "y": 0.05,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 354,
+        "battery": 1642
+      },
+      {
+        "x": -1.48,
+        "y": -0.23,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2661,
+        "battery": 1909
+      },
+      {
+        "x": 1.23,
+        "y": 1.87,
+        "price_range": 2,
+        "tier_label": "Tier 2",
+        "ram": 2668,
+        "battery": 1002
+      },
+      {
+        "x": -1.16,
+        "y": 0.48,
+        "price_range": 0,
+        "tier_label": "Tier 0",
+        "ram": 649,
+        "battery": 1122
+      },
+      {
+        "x": -0.71,
+        "y": 0.76,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 2717,
+        "battery": 1560
+      },
+      {
+        "x": 0.07,
+        "y": 0.69,
+        "price_range": 3,
+        "tier_label": "Tier 3",
+        "ram": 3760,
+        "battery": 1306
+      }
+    ]
+  },
+  "kmeans_clustering": {
+    "k_clusters": 4,
+    "silhouette_score": 0.044,
+    "clusters": [
+      {
+        "cluster_id": "Cluster 1",
+        "size": 463,
+        "dominant_tier": "Class 1",
+        "alignment_purity": 25.9,
+        "avg_ram_mb": 2188,
+        "avg_battery_mah": 1270
+      },
+      {
+        "cluster_id": "Cluster 2",
+        "size": 410,
+        "dominant_tier": "Class 2",
+        "alignment_purity": 28.0,
+        "avg_ram_mb": 2101,
+        "avg_battery_mah": 1251
+      },
+      {
+        "cluster_id": "Cluster 3",
+        "size": 702,
+        "dominant_tier": "Class 3",
+        "alignment_purity": 26.2,
+        "avg_ram_mb": 2185,
+        "avg_battery_mah": 1288
+      },
+      {
+        "cluster_id": "Cluster 4",
+        "size": 425,
+        "dominant_tier": "Class 0",
+        "alignment_purity": 27.1,
+        "avg_ram_mb": 2175,
+        "avg_battery_mah": 1241
+      }
+    ]
+  },
+  "correlation_analysis": [
+    {
+      "feature": "ram",
+      "label": "RAM (Memory)",
+      "correlation": 0.944
+    },
+    {
+      "feature": "battery_power",
+      "label": "Battery Capacity (mAh)",
+      "correlation": 0.13
+    },
+    {
+      "feature": "talk_time",
+      "label": "Talk Time (hrs)",
+      "correlation": 0.045
+    },
+    {
+      "feature": "four_g",
+      "label": "4G LTE",
+      "correlation": 0.036
+    },
+    {
+      "feature": "px_width",
+      "label": "Pixel Width",
+      "correlation": 0.033
+    },
+    {
+      "feature": "px_height",
+      "label": "Pixel Height",
+      "correlation": 0.032
+    },
+    {
+      "feature": "clock_speed",
+      "label": "CPU Clock (GHz)",
+      "correlation": 0.022
+    },
+    {
+      "feature": "wifi",
+      "label": "Wi-Fi",
+      "correlation": -0.022
+    }
+  ]
+}
