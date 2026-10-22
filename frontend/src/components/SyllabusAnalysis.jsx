@@ -246,6 +246,7 @@ export default function SyllabusAnalysis({ benchmarksData, projectionsData }) {
 
     const config = {
       responsive: true,
+      scrollZoom: false,
       displayModeBar: true,
       displaylogo: false,
       modeBarButtonsToRemove: ['toImage', 'sendDataToCloud']
@@ -275,47 +276,31 @@ export default function SyllabusAnalysis({ benchmarksData, projectionsData }) {
   }, [projectionMode, colorMode, showMstEdges, points, mst]);
 
   return (
-    <section id="syllabus-lab" className="py-20 px-4 md:px-8 max-w-7xl mx-auto">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4 border-neon-cyan/40 stripe-cyan">
-          <Network className="w-4 h-4 text-neon-cyan" />
-          <span className="font-semibold text-xs uppercase tracking-wider text-gray-200 font-mono">
-            Bento Tile 04 // 3D Manifolds & Graph Topology
-          </span>
-        </div>
-        <h2 className="text-3xl sm:text-5xl font-bold tracking-tighter text-white mb-4">
-          Dimensionality Reduction & MST Clustering —
-        </h2>
-        <p className="text-gray-400 text-base sm:text-lg font-medium leading-relaxed">
-          Unsupervised & Supervised Manifold projections (PCA, LDA, TruncatedSVD) combined with Minimum Spanning Tree (MST) graph topologies and DBSCAN density clustering.
-        </p>
-
-        {/* Projection Mode Switcher */}
-        <div className="flex flex-wrap justify-center gap-2 mt-8">
-          {[
-            { id: 'pca_3d', label: 'PCA 3D Manifold', icon: Box },
-            { id: 'lda_3d', label: 'LDA 3D Supervised', icon: Compass },
-            { id: 'svd_3d', label: 'TruncatedSVD 3D', icon: Layers },
-            { id: 'pca_2d', label: 'PCA 2D Projection', icon: Sliders }
-          ].map(tab => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setProjectionMode(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-mono font-bold tracking-wider transition-all cursor-pointer border ${
-                  projectionMode === tab.id
-                    ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan shadow-[0_0_20px_rgba(0,245,212,0.35)]'
-                    : 'glass-panel text-gray-400 border-white/10 hover:text-white'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
+    <section id="syllabus-lab" className="py-6 px-2 sm:px-6 max-w-7xl mx-auto">
+      {/* Projection Mode Switcher Ribbon */}
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {[
+          { id: 'pca_3d', label: 'PCA 3D Manifold', icon: Box },
+          { id: 'lda_3d', label: 'LDA 3D Supervised', icon: Compass },
+          { id: 'svd_3d', label: 'TruncatedSVD 3D', icon: Layers },
+          { id: 'pca_2d', label: 'PCA 2D Projection', icon: Sliders }
+        ].map(tab => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setProjectionMode(tab.id)}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer border ${
+                projectionMode === tab.id
+                  ? 'bg-[#00F5D4]/15 border-[#00F5D4] text-[#00F5D4] font-semibold shadow-[0_0_15px_rgba(0,245,212,0.2)]'
+                  : 'bg-black/40 text-white/60 border-white/10 hover:text-white hover:border-white/20'
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Main 3D WebGL Visualization Studio */}

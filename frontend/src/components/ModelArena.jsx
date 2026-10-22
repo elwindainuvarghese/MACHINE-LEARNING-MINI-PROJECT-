@@ -55,47 +55,31 @@ export default function ModelArena({ metricsData, benchmarksData }) {
   const barColors = ['#00f5d4', '#39ff14', '#7b2cbf', '#3b82f6', '#ffbe0b', '#ff2a85', '#ec4899'];
 
   return (
-    <section id="model-arena" className="py-20 px-4 md:px-8 max-w-7xl mx-auto">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4 border-neon-lime/40 stripe-lime">
-          <Trophy className="w-4 h-4 text-neon-lime" />
-          <span className="font-semibold text-xs uppercase tracking-wider text-gray-200 font-mono">
-            Bento Tile 03 // Model Arena & Lab Suite
-          </span>
-        </div>
-        <h2 className="text-3xl sm:text-5xl font-bold tracking-tighter text-white mb-4">
-          Algorithmic Arena & Lab Benchmarks —
-        </h2>
-        <p className="text-gray-400 text-base sm:text-lg font-medium leading-relaxed">
-          Exhaustive empirical comparison uniting canonical Machine Learning lab experiments: Linear baselines, CART trees, Bagging vs. Boosting, and Support Vector Machines.
-        </p>
-
-        {/* Algorithmic Suite Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mt-8">
-          {[
-            { id: 'exp5_ensemble', label: 'Ensemble Suite: Bagging vs. Boosting', icon: Zap },
-            { id: 'exp2_baselines', label: 'Continuous OLS vs. Softmax Logistic', icon: Scale },
-            { id: 'exp3_trees', label: 'CART Trees: Gini vs. Shannon Entropy', icon: GitBranch },
-            { id: 'exp7_svm', label: 'Support Vector Machines (Linear & RBF)', icon: ShieldCheck }
-          ].map(tab => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-mono font-bold tracking-wider transition-all cursor-pointer border ${
-                  activeTab === tab.id
-                    ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan shadow-[0_0_20px_rgba(0,245,212,0.35)]'
-                    : 'glass-panel text-gray-400 border-white/10 hover:text-white hover:border-gray-500'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
+    <section id="model-arena" className="py-6 px-2 sm:px-6 max-w-7xl mx-auto">
+      {/* Algorithmic Suite Tabs Ribbon */}
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {[
+          { id: 'exp5_ensemble', label: 'Ensemble: Bagging vs. Boosting', icon: Zap },
+          { id: 'exp2_baselines', label: 'OLS Regression vs. Softmax', icon: Scale },
+          { id: 'exp3_trees', label: 'CART: Gini vs. Entropy', icon: GitBranch },
+          { id: 'exp7_svm', label: 'Support Vector Machines (RBF)', icon: ShieldCheck }
+        ].map(tab => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer border ${
+                activeTab === tab.id
+                  ? 'bg-[#00F5D4]/15 border-[#00F5D4] text-[#00F5D4] font-semibold shadow-[0_0_15px_rgba(0,245,212,0.2)]'
+                  : 'bg-black/40 text-white/60 border-white/10 hover:text-white hover:border-white/20'
+              }`}
+            >
+              <Icon className="w-3.5 h-3.5" />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* ================= TAB CONTENT 1: ENSEMBLE LEARNING & FEATURE IMPORTANCES ================= */}

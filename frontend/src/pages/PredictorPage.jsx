@@ -188,15 +188,15 @@ export default function PredictorPage() {
       {/* ── HEADER ── */}
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#00F5D4]/40 bg-[#00F5D4]/10 px-3 py-1 font-mono text-xs uppercase tracking-widest text-[#00F5D4]">
-            <Sliders className="h-3.5 w-3.5" />
-            <span>Anti-AI Hardware Telemetry Synthesizer</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1 font-mono text-xs uppercase tracking-widest text-white/70">
+            <Sliders className="h-3.5 w-3.5 text-[#00F5D4]" />
+            <span>Interactive Hardware Configurator</span>
           </div>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
-            20-Spec Hardware Synthesizer & Live CAD X-Ray
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
+            20-Feature Hardware Configurator & CAD Model
           </h1>
-          <p className="mt-2 text-sm text-white/65 max-w-3xl leading-relaxed font-sans">
-            Tune hardware parameters in real time. The underlying Scikit-Learn + FastAPI pipeline applies Exp 2 KNN Imputation, runs RBF SVC, Gradient Boosting, Random Forest, and CART Trees, while Exp 9 DBSCAN isolates physical hardware anomalies.
+          <p className="mt-2 text-xs sm:text-sm text-white/60 max-w-3xl leading-relaxed font-sans">
+            Adjust device parameters in real time. The multi-model consensus engine evaluates Linear Regression, Decision Trees, Random Forest, Gradient Boosting, and Support Vector Machines, while DBSCAN acts as an automated density anomaly guardrail.
           </p>
         </div>
 
@@ -206,14 +206,14 @@ export default function PredictorPage() {
             <button
               key={key}
               onClick={() => applyPreset(key)}
-              className={`rounded-2xl border px-3.5 py-2 text-left text-xs transition cursor-pointer font-mono ${
+              className={`rounded-xl border px-3 py-2 text-left text-xs transition cursor-pointer font-mono ${
                 activePreset === key
-                  ? "border-[#00F5D4] bg-[#00F5D4]/20 text-white shadow-[0_0_20px_rgba(0,245,212,0.25)]"
-                  : "border-white/10 bg-[#070A11] text-white/70 hover:border-white/25 hover:text-white"
+                  ? "border-[#00F5D4] bg-[#00F5D4]/15 text-white shadow-[0_0_15px_rgba(0,245,212,0.2)] font-semibold"
+                  : "border-white/10 bg-[#070A11] text-white/70 hover:border-white/20 hover:text-white"
               }`}
             >
-              <div className="font-bold">{item.label}</div>
-              <div className="text-[10px] opacity-60">
+              <div className="font-semibold text-xs">{item.label}</div>
+              <div className="text-[10px] opacity-55">
                 {item.subtitle}
               </div>
             </button>

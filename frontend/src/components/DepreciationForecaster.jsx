@@ -108,38 +108,22 @@ export default function DepreciationForecaster({ onApplySpecsToClassifier }) {
   };
 
   return (
-    <section id="depreciation-forecaster" className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel mb-4 border-neon-magenta/40 stripe-magenta">
-          <TrendingDown className="w-4 h-4 text-neon-magenta" />
-          <span className="font-semibold text-xs uppercase tracking-wider text-gray-200 font-mono">
-            Secondary Market Depreciation Engine
-          </span>
-        </div>
-        <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-4">
-          Smartphone Resale & 5-Month Price Predictor —
-        </h2>
-        <p className="text-gray-400 text-lg font-medium">
-          Select any real-world device (Samsung, Apple, Xiaomi, OnePlus, etc.) and predict its exact market value after 5 months or across its 1-year lifecycle.
-        </p>
-
-        {/* Brand Filter Pills */}
-        <div className="flex justify-center gap-2 mt-8 flex-wrap">
-          {brands.map((b) => (
-            <button
-              key={b}
-              onClick={() => setSelectedBrand(b)}
-              className={`px-4 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all border cursor-pointer ${
-                selectedBrand === b
-                  ? 'glass-dark text-neon-cyan border-neon-cyan shadow-[0_0_15px_rgba(0,245,212,0.4)]'
-                  : 'glass-panel text-gray-400 border-white/10 hover:border-gray-500 hover:text-white'
-              }`}
-            >
-              {b}
-            </button>
-          ))}
-        </div>
+    <section id="depreciation-forecaster" className="py-6 px-2 sm:px-6 max-w-7xl mx-auto">
+      {/* Brand Filter Pills */}
+      <div className="flex justify-center gap-2 mb-8 flex-wrap">
+        {brands.map((b) => (
+          <button
+            key={b}
+            onClick={() => setSelectedBrand(b)}
+            className={`px-3.5 py-1.5 rounded-full font-mono text-xs transition-all border cursor-pointer ${
+              selectedBrand === b
+                ? 'bg-[#00F5D4]/15 text-[#00F5D4] border-[#00F5D4] font-semibold shadow-[0_0_15px_rgba(0,245,212,0.2)]'
+                : 'bg-black/40 text-white/60 border-white/10 hover:border-white/20 hover:text-white'
+            }`}
+          >
+            {b}
+          </button>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

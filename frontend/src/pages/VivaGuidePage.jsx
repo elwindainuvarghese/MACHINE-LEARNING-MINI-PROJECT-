@@ -112,7 +112,34 @@ export default function VivaGuidePage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-3xl border border-white/10 bg-black/45">
+        {/* Mobile View: Clean Card Stack */}
+        <div className="grid grid-cols-1 gap-3 md:hidden">
+          {datasetFeatures.map((f) => {
+            const Icon = f.icon;
+            return (
+              <div key={f.name} className="rounded-2xl border border-white/10 bg-[#080B14] p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 font-mono font-bold text-[#00F5D4] text-xs">
+                    <Icon className="h-4 w-4 text-white/50" />
+                    <span>{f.name}</span>
+                  </div>
+                  <span className="rounded-md bg-white/5 px-2 py-0.5 border border-white/10 text-[10px] font-mono text-white/60">
+                    {f.category}
+                  </span>
+                </div>
+                <p className="text-xs text-white/80 font-sans leading-relaxed">
+                  {f.desc}
+                </p>
+                <div className="font-mono text-[11px] text-white/50 pt-1 border-t border-white/5">
+                  Range: <span className="text-white/80">{f.type}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop View: Full High-Density Table */}
+        <div className="hidden md:block overflow-x-auto rounded-3xl border border-white/10 bg-black/45">
           <table className="w-full text-left font-mono text-xs">
             <thead className="border-b border-white/10 bg-white/5 text-white/50 uppercase text-[10px]">
               <tr>

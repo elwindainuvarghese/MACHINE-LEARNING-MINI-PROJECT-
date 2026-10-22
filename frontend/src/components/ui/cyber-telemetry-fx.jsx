@@ -134,7 +134,7 @@ export function ExplodedSmartphoneCAD({
       <div className="relative z-10 mb-2 flex w-full items-center justify-between font-mono text-[10px] text-white/50">
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full animate-ping" style={{ backgroundColor: isOutlier ? "#F43F5E" : accent }} />
-          CAD//SILICON X-RAY V3.1
+          Hardware Architecture Schematic
         </span>
         <span style={{ color: isOutlier ? "#F43F5E" : accent }}>
           {scH}cm × {scW}cm · {pxW}×{pxH}px
@@ -554,9 +554,9 @@ export function PrecisionRulerSlider({
   const pct = Math.round(((value - min) / (max - min)) * 100);
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-black/55 p-3.5 transition-colors hover:border-white/20">
+    <div className="rounded-2xl border border-white/[0.08] bg-[#070A12]/90 p-3.5 transition-colors hover:border-white/20">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-white/75 font-medium">{label}</span>
+        <span className="text-white/80 font-medium">{label}</span>
         <div className="flex items-center gap-2">
           {badge && (
             <span className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-white/60">
@@ -569,7 +569,7 @@ export function PrecisionRulerSlider({
         </div>
       </div>
 
-      {/* Track & Slider */}
+      {/* Track & Slider with enhanced mobile touch surface */}
       <div className="relative mt-2.5">
         <input
           type="range"
@@ -578,12 +578,12 @@ export function PrecisionRulerSlider({
           step={step}
           value={value}
           onChange={(e) => onChange(parseFloat(e.target.value))}
-          className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-white/10 accent-[#00F5D4]"
+          className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-[#00F5D4] py-1 transition-all"
           style={{ accentColor: accent }}
         />
 
         {/* Micro-ruler tick marks */}
-        <div className="mt-1 flex justify-between px-0.5 opacity-30">
+        <div className="mt-1 flex justify-between px-0.5 opacity-25">
           {Array.from({ length: 11 }).map((_, i) => (
             <span
               key={i}
