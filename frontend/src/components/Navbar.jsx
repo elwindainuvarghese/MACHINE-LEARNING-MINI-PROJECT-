@@ -18,8 +18,6 @@ export default function Navbar() {
   const {
     activeTierMeta,
     backendConnected,
-    heroMode,
-    setHeroMode,
     inference,
   } = useHardware();
 
@@ -104,18 +102,6 @@ export default function Navbar() {
             <Server className="w-3 h-3 text-[#00F5D4]" />
             <span>{backendConnected ? "FastAPI Live" : "Client Engine"}</span>
           </div>
-
-          {/* Hero Mode Toggle (Visible on Home) */}
-          {location.pathname === "/" && (
-            <button
-              onClick={() => setHeroMode(heroMode === "tunnel" ? "liquid" : "tunnel")}
-              className="flex items-center gap-1 px-3 py-1 rounded-full border border-white/20 bg-white/5 text-[11px] font-mono text-white/80 hover:border-[#00F5D4] hover:text-white transition cursor-pointer"
-              title="Toggle between 3D Perspective Tunnel Hero and WebGL2 Liquid Sculpture Hero"
-            >
-              <Sparkles className="w-3 h-3 text-[#00F5D4]" />
-              <span className="hidden sm:inline">{heroMode === "tunnel" ? "3D Tunnel" : "Liquid Sculpture"}</span>
-            </button>
-          )}
         </div>
       </nav>
 

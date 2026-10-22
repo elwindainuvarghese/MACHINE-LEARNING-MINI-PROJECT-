@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LiquidGlassSculptureHero from "@/components/ui/liquid-glass-sculpture-hero";
 import PerspectiveTunnelHero from "@/components/ui/perspective-tunnel-hero";
 import BentoGrid from "@/components/BentoGrid";
 import { useHardware } from "@/context/HardwareContext";
@@ -35,16 +34,11 @@ export default function HomePage() {
     setSpecs,
     activePreset,
     applyPreset,
-    heroMode,
-    setHeroMode,
     inference,
     activeTierMeta,
     backendConnected,
     PRESETS,
   } = useHardware();
-
-  // "sculpture" is the Awwwards 3D Refractive Glass Star Cushion matching the reference image
-  const [activeHero, setActiveHero] = useState("sculpture"); // "sculpture" | "tunnel"
 
   const handleCardSelect = (item) => {
     if (item.presetKey) {
@@ -70,30 +64,13 @@ export default function HomePage() {
 
   return (
     <div className="space-y-16">
-      {/* ── 1. 3D REFRACTIVE LIQUID GLASS SCULPTURE HERO (AWWWARDS / REFERENCE IMAGE) ── */}
-      <div className="relative">
-        {activeHero === "sculpture" ? (
-          <LiquidGlassSculptureHero onJumpToSection={handleJumpToSection} />
-        ) : (
-          <PerspectiveTunnelHero
-            activeAccent={activeTierMeta.accent}
-            activeTierLabel={activeTierMeta.name}
-            onSelectCard={handleCardSelect}
-            onJumpToSection={handleJumpToSection}
-          />
-        )}
-
-        {/* Floating Quick Hero Mode Switcher */}
-        <div className="absolute top-20 right-6 md:right-12 z-30">
-          <button
-            onClick={() => setActiveHero(activeHero === "sculpture" ? "tunnel" : "sculpture")}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/20 bg-black/60 backdrop-blur-md text-[11px] font-mono text-white/90 hover:border-[#00F5D4] transition shadow-xl cursor-pointer"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-[#00F5D4]" />
-            <span>{activeHero === "sculpture" ? "3D Tunnel View" : "Atelier Glass Sculpture"}</span>
-          </button>
-        </div>
-      </div>
+      {/* ── 1. 3D PERSPECTIVE TUNNEL HERO ── */}
+      <PerspectiveTunnelHero
+        activeAccent={activeTierMeta.accent}
+        activeTierLabel={activeTierMeta.name}
+        onSelectCard={handleCardSelect}
+        onJumpToSection={handleJumpToSection}
+      />
 
       {/* PCB Data Bus Pulse Header */}
       <div className="mx-auto max-w-7xl px-6">
