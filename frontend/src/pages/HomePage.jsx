@@ -38,7 +38,10 @@ export default function HomePage() {
     activeTierMeta,
     backendConnected,
     PRESETS,
+    theme,
   } = useHardware();
+
+  const isLight = theme === "light";
 
   const handleCardSelect = (item) => {
     if (item.presetKey) {
@@ -81,19 +84,27 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-8 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-xs uppercase tracking-widest text-white/70">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-widest ${
+              isLight ? "border-slate-200 bg-white/80 text-slate-700 shadow-xs" : "border-white/10 bg-white/[0.03] text-white/70"
+            }`}>
               <span className="h-1.5 w-1.5 rounded-full bg-[#00F5D4]" />
               <span>Modular Architecture</span>
             </div>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className={`mt-2 text-2xl font-bold tracking-tight sm:text-4xl ${
+              isLight ? "text-slate-900" : "text-white"
+            }`}>
               System Modules & Research Labs
             </h2>
-            <p className="mt-1 text-xs sm:text-sm text-white/55 font-sans max-w-2xl">
+            <p className={`mt-1 text-xs sm:text-sm font-sans max-w-2xl ${
+              isLight ? "text-slate-600" : "text-white/55"
+            }`}>
               Select any workspace module below to evaluate model benchmarks, test interactive hardware configurations, or project 3D manifold embeddings.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-xs text-white/50">
+          <div className={`flex items-center gap-2 font-mono text-xs ${
+            isLight ? "text-slate-600" : "text-white/50"
+          }`}>
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>8 Canonical Engines Synchronized</span>
           </div>
@@ -105,21 +116,31 @@ export default function HomePage() {
             <SpotlightBentoCard accentColor="#00F5D4" className="h-full flex flex-col justify-between p-6">
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-[#00F5D4]">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${
+                    isLight ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-white/5 border-white/10 text-[#00F5D4]"
+                  }`}>
                     <Sliders className="h-5 w-5" />
                   </div>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] text-white/60">
+                  <span className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${
+                    isLight ? "border-slate-200 bg-slate-100 text-slate-700 font-medium" : "border-white/10 bg-black/40 text-white/60"
+                  }`}>
                     /predict
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-[#00F5D4] transition-colors">
+                <h3 className={`text-lg sm:text-xl font-bold transition-colors ${
+                  isLight ? "text-slate-900 group-hover:text-emerald-700" : "text-white group-hover:text-[#00F5D4]"
+                }`}>
                   20-Feature Hardware Configurator
                 </h3>
-                <p className="mt-2 text-xs text-white/60 leading-relaxed font-sans">
+                <p className={`mt-2 text-xs leading-relaxed font-sans ${
+                  isLight ? "text-slate-600" : "text-white/60"
+                }`}>
                   Real-time specification tuner with live exploded CAD phone schematic, multi-model consensus voting, and DBSCAN density anomaly alerts.
                 </p>
               </div>
-              <div className="mt-5 flex items-center justify-between text-xs font-mono font-medium text-[#00F5D4] pt-3 border-t border-white/5">
+              <div className={`mt-5 flex items-center justify-between text-xs font-mono font-medium pt-3 border-t ${
+                isLight ? "border-slate-200 text-emerald-700" : "border-white/5 text-[#00F5D4]"
+              }`}>
                 <span>Configure Specs</span>
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -131,21 +152,31 @@ export default function HomePage() {
             <SpotlightBentoCard accentColor="#A855F7" className="h-full flex flex-col justify-between p-6">
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-purple-400">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${
+                    isLight ? "bg-purple-50 border-purple-200 text-purple-700" : "bg-white/5 border-white/10 text-purple-400"
+                  }`}>
                     <Trophy className="h-5 w-5" />
                   </div>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] text-white/60">
+                  <span className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${
+                    isLight ? "border-slate-200 bg-slate-100 text-slate-700 font-medium" : "border-white/10 bg-black/40 text-white/60"
+                  }`}>
                     /arena
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                <h3 className={`text-lg sm:text-xl font-bold transition-colors ${
+                  isLight ? "text-slate-900 group-hover:text-purple-700" : "text-white group-hover:text-purple-300"
+                }`}>
                   Supervised Benchmark Arena
                 </h3>
-                <p className="mt-2 text-xs text-white/60 leading-relaxed font-sans">
+                <p className={`mt-2 text-xs leading-relaxed font-sans ${
+                  isLight ? "text-slate-600" : "text-white/60"
+                }`}>
                   Rigorous empirical comparison of Multinomial Logistic Regression, CART Decision Trees (Gini vs. Entropy), Random Forest, and RBF Support Vector Machines.
                 </p>
               </div>
-              <div className="mt-5 flex items-center justify-between text-xs font-mono font-medium text-purple-400 pt-3 border-t border-white/5">
+              <div className={`mt-5 flex items-center justify-between text-xs font-mono font-medium pt-3 border-t ${
+                isLight ? "border-slate-200 text-purple-700" : "border-white/5 text-purple-400"
+              }`}>
                 <span>View Benchmarks</span>
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -157,21 +188,31 @@ export default function HomePage() {
             <SpotlightBentoCard accentColor="#EC4899" className="h-full flex flex-col justify-between p-6">
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-pink-400">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${
+                    isLight ? "bg-pink-50 border-pink-200 text-pink-700" : "bg-white/5 border-white/10 text-pink-400"
+                  }`}>
                     <Network className="h-5 w-5" />
                   </div>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] text-white/60">
+                  <span className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${
+                    isLight ? "border-slate-200 bg-slate-100 text-slate-700 font-medium" : "border-white/10 bg-black/40 text-white/60"
+                  }`}>
                     /manifold
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-pink-300 transition-colors">
+                <h3 className={`text-lg sm:text-xl font-bold transition-colors ${
+                  isLight ? "text-slate-900 group-hover:text-pink-700" : "text-white group-hover:text-pink-300"
+                }`}>
                   3D Manifolds & Cluster Topology
                 </h3>
-                <p className="mt-2 text-xs text-white/60 leading-relaxed font-sans">
+                <p className={`mt-2 text-xs leading-relaxed font-sans ${
+                  isLight ? "text-slate-600" : "text-white/60"
+                }`}>
                   Interactive 3D scatter projections comparing PCA, LDA, and TruncatedSVD dimensionality reduction alongside Minimum Spanning Tree graph edges.
                 </p>
               </div>
-              <div className="mt-5 flex items-center justify-between text-xs font-mono font-medium text-pink-400 pt-3 border-t border-white/5">
+              <div className={`mt-5 flex items-center justify-between text-xs font-mono font-medium pt-3 border-t ${
+                isLight ? "border-slate-200 text-pink-700" : "border-white/5 text-pink-400"
+              }`}>
                 <span>Inspect Manifolds</span>
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -183,21 +224,31 @@ export default function HomePage() {
             <SpotlightBentoCard accentColor="#10B981" className="h-full flex flex-col justify-between p-6">
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-emerald-400">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${
+                    isLight ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-white/5 border-white/10 text-emerald-400"
+                  }`}>
                     <TrendingDown className="h-5 w-5" />
                   </div>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] text-white/60">
+                  <span className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${
+                    isLight ? "border-slate-200 bg-slate-100 text-slate-700 font-medium" : "border-white/10 bg-black/40 text-white/60"
+                  }`}>
                     /resale
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                <h3 className={`text-lg sm:text-xl font-bold transition-colors ${
+                  isLight ? "text-slate-900 group-hover:text-emerald-700" : "text-white group-hover:text-emerald-300"
+                }`}>
                   Secondary Market Valuation
                 </h3>
-                <p className="mt-2 text-xs text-white/60 leading-relaxed font-sans">
+                <p className={`mt-2 text-xs leading-relaxed font-sans ${
+                  isLight ? "text-slate-600" : "text-white/60"
+                }`}>
                   Mathematical exponential depreciation model forecasting multi-brand device resale trajectory across Samsung, Apple, Xiaomi, OnePlus, and Google Pixel.
                 </p>
               </div>
-              <div className="mt-5 flex items-center justify-between text-xs font-mono font-medium text-emerald-400 pt-3 border-t border-white/5">
+              <div className={`mt-5 flex items-center justify-between text-xs font-mono font-medium pt-3 border-t ${
+                isLight ? "border-slate-200 text-emerald-700" : "border-white/5 text-emerald-400"
+              }`}>
                 <span>Forecast Resale</span>
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -209,21 +260,31 @@ export default function HomePage() {
             <SpotlightBentoCard accentColor="#38BDF8" className="h-full flex flex-col justify-between p-6">
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-sky-400">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${
+                    isLight ? "bg-sky-50 border-sky-200 text-sky-700" : "bg-white/5 border-white/10 text-sky-400"
+                  }`}>
                     <BookOpen className="h-5 w-5" />
                   </div>
-                  <span className="rounded-full border border-white/10 bg-black/40 px-2.5 py-0.5 font-mono text-[10px] text-white/60">
+                  <span className={`rounded-full border px-2.5 py-0.5 font-mono text-[10px] ${
+                    isLight ? "border-slate-200 bg-slate-100 text-slate-700 font-medium" : "border-white/10 bg-black/40 text-white/60"
+                  }`}>
                     /guide
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-sky-300 transition-colors">
+                <h3 className={`text-lg sm:text-xl font-bold transition-colors ${
+                  isLight ? "text-slate-900 group-hover:text-sky-700" : "text-white group-hover:text-sky-300"
+                }`}>
                   Hardware Dataset Specifications
                 </h3>
-                <p className="mt-2 text-xs text-white/60 leading-relaxed font-sans">
+                <p className={`mt-2 text-xs leading-relaxed font-sans ${
+                  isLight ? "text-slate-600" : "text-white/60"
+                }`}>
                   Complete feature dictionary covering all 20 Kaggle hardware dimensions and the official 4-tier mobile pricing taxonomy definitions.
                 </p>
               </div>
-              <div className="mt-5 flex items-center justify-between text-xs font-mono font-medium text-sky-400 pt-3 border-t border-white/5">
+              <div className={`mt-5 flex items-center justify-between text-xs font-mono font-medium pt-3 border-t ${
+                isLight ? "border-slate-200 text-sky-700" : "border-white/5 text-sky-400"
+              }`}>
                 <span>Review Specs</span>
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -234,20 +295,22 @@ export default function HomePage() {
           <SpotlightBentoCard accentColor={activeTierMeta.accent} className="h-full flex flex-col justify-between p-6">
             <div>
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-0.5 font-mono text-[11px] text-white">
+                <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-mono text-[11px] ${
+                  isLight ? "bg-slate-100 text-slate-800 border border-slate-200 font-medium" : "bg-white/10 text-white"
+                }`}>
                   <Zap className="h-3 w-3" style={{ color: activeTierMeta.accent }} />
                   Live State
                 </span>
-                <span className="font-mono text-xs text-white/60">
-                  Continuous: <strong className="text-white"><ScrambleText text={inference.continuousIndex} /></strong>
+                <span className={`font-mono text-xs ${isLight ? "text-slate-600" : "text-white/60"}`}>
+                  Continuous: <strong className={isLight ? "text-slate-900" : "text-white"}><ScrambleText text={inference.continuousIndex} /></strong>
                 </span>
               </div>
               
               <div className="mt-4">
-                <p className="font-mono text-[10px] uppercase tracking-wider text-white/45">
+                <p className={`font-mono text-[10px] uppercase tracking-wider ${isLight ? "text-slate-500 font-medium" : "text-white/45"}`}>
                   Consensus Classification
                 </p>
-                <h3 className="text-2xl font-bold text-white tracking-tight">
+                <h3 className={`text-2xl font-bold tracking-tight ${isLight ? "text-slate-900" : "text-white"}`}>
                   <ScrambleText text={activeTierMeta.name} duration={300} />
                 </h3>
                 <p
@@ -256,23 +319,27 @@ export default function HomePage() {
                 >
                   <ScrambleText text={activeTierMeta.bracket} duration={260} />
                 </p>
-                <p className="mt-2 text-xs font-mono text-white/50">
+                <p className={`mt-2 text-xs font-mono ${isLight ? "text-slate-500 font-medium" : "text-white/50"}`}>
                   RAM: {specs.ram}MB · Bat: {specs.battery_power}mAh · Cores: {specs.n_cores}
                 </p>
               </div>
             </div>
 
-            <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3">
+            <div className={`mt-5 flex items-center justify-between border-t pt-3 ${isLight ? "border-slate-200" : "border-white/10"}`}>
               <span
                 className={`font-mono text-xs font-semibold ${
-                  inference.isOutlier ? "text-rose-400" : "text-emerald-400"
+                  inference.isOutlier
+                    ? isLight ? "text-rose-700" : "text-rose-400"
+                    : isLight ? "text-emerald-700" : "text-emerald-400"
                 }`}
               >
                 {inference.isOutlier ? "⚠ DBSCAN Outlier" : "✓ Inlier Manifold"}
               </span>
               <Link
                 to="/predict"
-                className="inline-flex items-center gap-1 font-mono text-xs text-white/80 hover:text-white transition"
+                className={`inline-flex items-center gap-1 font-mono text-xs transition ${
+                  isLight ? "text-slate-700 hover:text-slate-900 font-medium" : "text-white/80 hover:text-white"
+                }`}
               >
                 <span>Edit Specs</span>
                 <ArrowRight className="h-3 w-3" />

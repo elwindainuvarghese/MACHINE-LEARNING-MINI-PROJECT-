@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHardware } from "@/context/HardwareContext";
 import {
   motion,
   useMotionValue,
@@ -62,6 +63,8 @@ export function SpotlightBentoCard({
   className = "",
   accentColor = "#00F5D4",
 }) {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
   const mouseX = useMotionValue(-600);
   const mouseY = useMotionValue(-600);
 
@@ -80,16 +83,32 @@ export function SpotlightBentoCard({
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#070A11]/90 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-white/20 ${className}`}
+      className={`group relative overflow-hidden rounded-3xl border p-6 backdrop-blur-2xl transition-all duration-500 ${
+        isLight
+          ? "border-slate-200/90 bg-white/95 shadow-[0_8px_30px_rgba(15,23,42,0.06)] hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)] text-slate-900"
+          : "border-white/[0.08] bg-[#070A11]/90 hover:border-white/20 text-white"
+      } ${className}`}
     >
       {/* Corner Technical Crosshairs */}
-      <span className="pointer-events-none absolute left-3 top-3 h-2 w-2 border-l border-t border-white/30 z-20" />
-      <span className="pointer-events-none absolute right-3 top-3 h-2 w-2 border-r border-t border-white/30 z-20" />
-      <span className="pointer-events-none absolute bottom-3 left-3 h-2 w-2 border-b border-l border-white/30 z-20" />
-      <span className="pointer-events-none absolute bottom-3 right-3 h-2 w-2 border-b border-r border-white/30 z-20" />
+      <span className={`pointer-events-none absolute left-3 top-3 h-2 w-2 border-l border-t z-20 ${
+        isLight ? "border-slate-300" : "border-white/30"
+      }`} />
+      <span className={`pointer-events-none absolute right-3 top-3 h-2 w-2 border-r border-t z-20 ${
+        isLight ? "border-slate-300" : "border-white/30"
+      }`} />
+      <span className={`pointer-events-none absolute bottom-3 left-3 h-2 w-2 border-b border-l z-20 ${
+        isLight ? "border-slate-300" : "border-white/30"
+      }`} />
+      <span className={`pointer-events-none absolute bottom-3 right-3 h-2 w-2 border-b border-r z-20 ${
+        isLight ? "border-slate-300" : "border-white/30"
+      }`} />
 
       {/* Subtle blueprint dot grid */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:18px_18px] opacity-40" />
+      <div className={`pointer-events-none absolute inset-0 bg-[size:18px_18px] ${
+        isLight
+          ? "bg-[radial-gradient(rgba(15,23,42,0.05)_1px,transparent_1px)] opacity-50"
+          : "bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] opacity-40"
+      }`} />
 
       {/* Cursor-Tracked Specular Rim Light */}
       <motion.div
@@ -119,6 +138,9 @@ export function ExplodedSmartphoneCAD({
   isOutlier = false,
   accent = "#00F5D4",
 }) {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
+
   // Normalize physical dimensions for real-time SVG CAD scaling
   const widthPx = Math.max(88, Math.min(160, 80 + (scW / 18) * 78));
   const heightPx = Math.max(160, Math.min(250, 150 + (scH / 19) * 95));
@@ -126,17 +148,25 @@ export function ExplodedSmartphoneCAD({
   const ramPct = Math.max(6, Math.min(100, Math.round(((ram - 256) / 3744) * 100)));
 
   return (
-    <div className="relative flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#04060A] p-4 overflow-hidden">
+    <div className={`relative flex flex-col items-center justify-center rounded-2xl border p-4 overflow-hidden shadow-xs transition-colors ${
+      isLight ? "border-slate-200/90 bg-white" : "border-white/10 bg-[#04060A]"
+    }`}>
       {/* Blueprint CAD Grid Background */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:16px_16px]" />
+      <div className={`pointer-events-none absolute inset-0 bg-[size:16px_16px] ${
+        isLight
+          ? "bg-[linear-gradient(to_right,rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.03)_1px,transparent_1px)]"
+          : "bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]"
+      }`} />
 
       {/* Top CAD Telemetry Header */}
-      <div className="relative z-10 mb-2 flex w-full items-center justify-between font-mono text-[10px] text-white/50">
-        <span className="flex items-center gap-1.5">
+      <div className={`relative z-10 mb-2 flex w-full items-center justify-between font-mono text-[10px] ${
+        isLight ? "text-slate-500" : "text-white/50"
+      }`}>
+        <span className="flex items-center gap-1.5 font-medium">
           <span className="h-1.5 w-1.5 rounded-full animate-ping" style={{ backgroundColor: isOutlier ? "#F43F5E" : accent }} />
           Hardware Architecture Schematic
         </span>
-        <span style={{ color: isOutlier ? "#F43F5E" : accent }}>
+        <span className="font-semibold" style={{ color: isOutlier ? "#F43F5E" : isLight ? "#0D9488" : accent }}>
           {scH}cm × {scW}cm · {pxW}×{pxH}px
         </span>
       </div>
@@ -150,7 +180,7 @@ export function ExplodedSmartphoneCAD({
             borderColor: isOutlier ? "#F43F5E" : accent,
           }}
           transition={{ type: "spring", stiffness: 180, damping: 22 }}
-          className="relative rounded-[22px] border-2 bg-black/85 p-2.5 shadow-2xl flex flex-col justify-between"
+          className="relative rounded-[22px] border-2 bg-slate-950 p-2.5 shadow-2xl flex flex-col justify-between"
           style={{
             boxShadow: `0 0 35px -8px ${isOutlier ? "#F43F5E" : accent}45`,
           }}
@@ -247,9 +277,11 @@ export function ExplodedSmartphoneCAD({
       </div>
 
       {/* Bottom Dimension Rulers */}
-      <div className="relative z-10 flex w-full items-center justify-between border-t border-white/10 pt-2 font-mono text-[10px] text-white/45">
+      <div className={`relative z-10 flex w-full items-center justify-between border-t pt-2 font-mono text-[10px] ${
+        isLight ? "border-slate-200 text-slate-500" : "border-white/10 text-white/45"
+      }`}>
         <span>ASPECT: {(scH / Math.max(1, scW)).toFixed(2)}:1</span>
-        <span className={isOutlier ? "text-rose-400 font-bold" : "text-emerald-400 font-bold"}>
+        <span className={isOutlier ? "text-rose-500 font-bold" : isLight ? "text-slate-600 font-medium" : "text-emerald-400 font-bold"}>
           {isOutlier ? "STATUS: GEOMETRY ANOMALY" : "STATUS: NOMINAL"}
         </span>
       </div>
@@ -449,18 +481,27 @@ export function LiveCartTreeVisualizer({
    5. DBSCAN SONAR RADAR & CHROMATIC SHOCKWAVE ALERT (Exp 9 Outlier)
    ──────────────────────────────────────────────────────────────────── */
 export function DbscanSonarRadar({ isOutlier = false, score = 69.5, reason = "" }) {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
+
   return (
     <div
       className={`relative overflow-hidden rounded-2xl border p-4 transition-all duration-300 ${
         isOutlier
-          ? "border-rose-500/80 bg-rose-950/40 text-rose-100 shadow-[0_0_30px_rgba(244,63,94,0.35)]"
-          : "border-emerald-500/40 bg-emerald-950/25 text-emerald-200"
+          ? isLight
+            ? "border-rose-300 bg-rose-50 text-rose-950 shadow-sm"
+            : "border-rose-500/80 bg-rose-950/40 text-rose-100 shadow-[0_0_30px_rgba(244,63,94,0.35)]"
+          : isLight
+            ? "border-emerald-300 bg-emerald-50/80 text-emerald-950 shadow-xs"
+            : "border-emerald-500/40 bg-emerald-950/25 text-emerald-200"
       }`}
     >
       {/* Sonar sweep overlay */}
       <div className="flex items-center gap-4">
         {/* Radar circle animation */}
-        <div className="relative h-14 w-14 shrink-0 rounded-full border border-white/20 bg-black/60 flex items-center justify-center overflow-hidden">
+        <div className={`relative h-14 w-14 shrink-0 rounded-full border flex items-center justify-center overflow-hidden ${
+          isLight ? "border-slate-300 bg-slate-900" : "border-white/20 bg-black/60"
+        }`}>
           {/* Concentric rings */}
           <div className="absolute h-10 w-10 rounded-full border border-white/10" />
           <div className="absolute h-5 w-5 rounded-full border border-white/15" />
@@ -551,20 +592,28 @@ export function PrecisionRulerSlider({
   accent = "#00F5D4",
   onChange,
 }) {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
   const pct = Math.round(((value - min) / (max - min)) * 100);
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#070A12]/90 p-3.5 transition-colors hover:border-white/20">
+    <div className={`rounded-2xl border p-3.5 transition-colors ${
+      isLight
+        ? "border-slate-200/90 bg-white hover:border-slate-300 shadow-xs text-slate-900"
+        : "border-white/[0.08] bg-[#070A12]/90 hover:border-white/20 text-white"
+    }`}>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-white/80 font-medium">{label}</span>
+        <span className={`font-medium ${isLight ? "text-slate-800" : "text-white/80"}`}>{label}</span>
         <div className="flex items-center gap-2">
           {badge && (
-            <span className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-white/60">
+            <span className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
+              isLight ? "bg-slate-100 text-slate-600 border border-slate-200" : "bg-white/10 text-white/60"
+            }`}>
               {badge}
             </span>
           )}
-          <span className="font-mono font-bold text-white tabular-nums">
-            {value} <span className="text-white/50 text-[11px]">{unit}</span>
+          <span className={`font-mono font-bold tabular-nums ${isLight ? "text-slate-900" : "text-white"}`}>
+            {value} <span className={`text-[11px] ${isLight ? "text-slate-500" : "text-white/50"}`}>{unit}</span>
           </span>
         </div>
       </div>
@@ -578,16 +627,22 @@ export function PrecisionRulerSlider({
           step={step}
           value={value}
           onChange={(e) => onChange(parseFloat(e.target.value))}
-          className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-white/15 accent-[#00F5D4] py-1 transition-all"
+          className={`h-2 w-full cursor-pointer appearance-none rounded-lg py-1 transition-all ${
+            isLight ? "bg-slate-200" : "bg-white/15"
+          }`}
           style={{ accentColor: accent }}
         />
 
         {/* Micro-ruler tick marks */}
-        <div className="mt-1 flex justify-between px-0.5 opacity-25">
+        <div className="mt-1 flex justify-between px-0.5 opacity-30">
           {Array.from({ length: 11 }).map((_, i) => (
             <span
               key={i}
-              className={`h-1.5 w-[1px] ${i % 2 === 0 ? "h-2 bg-white/70" : "bg-white/40"}`}
+              className={`h-1.5 w-[1px] ${
+                i % 2 === 0
+                  ? isLight ? "h-2 bg-slate-600" : "h-2 bg-white/70"
+                  : isLight ? "bg-slate-400" : "bg-white/40"
+              }`}
             />
           ))}
         </div>

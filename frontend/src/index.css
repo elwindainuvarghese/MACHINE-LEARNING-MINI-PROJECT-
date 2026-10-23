@@ -126,68 +126,101 @@ input[type=range] {
 
 .light-theme .glass-panel,
 .light-theme .glass-dark {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(15, 23, 42, 0.08) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(15, 23, 42, 0.09) !important;
   color: #0F172A !important;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* Cards & Containers in Light Mode */
-.light-theme .bg-\[\#04060A\],
-.light-theme .bg-\[\#05070B\],
-.light-theme .bg-\[\#06080E\],
-.light-theme .bg-\[\#070A11\],
-.light-theme .bg-\[\#070A12\],
-.light-theme .bg-\[\#080B12\],
-.light-theme .bg-\[\#080B14\],
-.light-theme .bg-\[\#090D17\],
-.light-theme .bg-\[\#0B0F19\],
-.light-theme .bg-black\/40,
-.light-theme .bg-black\/50,
-.light-theme .bg-black\/60,
-.light-theme .bg-black\/70,
-.light-theme .bg-black\/80 {
+/* All dark hex cards & containers turn into clean, crisp white cards in Light Mode */
+.light-theme [class*="bg-[#04060A"],
+.light-theme [class*="bg-[#05070B"],
+.light-theme [class*="bg-[#06080E"],
+.light-theme [class*="bg-[#070A11"],
+.light-theme [class*="bg-[#070A12"],
+.light-theme [class*="bg-[#080B12"],
+.light-theme [class*="bg-[#080B14"],
+.light-theme [class*="bg-[#090D17"],
+.light-theme [class*="bg-[#0B0F19"],
+.light-theme [class*="bg-[#0B101B]"],
+.light-theme [class*="bg-black/"],
+.light-theme .bg-black {
   background-color: #FFFFFF !important;
-  border-color: rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(15, 23, 42, 0.09) !important;
   color: #0F172A;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
-/* Text Overrides in Light Mode */
+/* Text Overrides in Light Mode - High Contrast & Crisp */
+.light-theme h1,
+.light-theme h2,
+.light-theme h3,
+.light-theme h4 {
+  color: #0F172A !important;
+}
+
 .light-theme .text-white {
   color: #0F172A !important;
 }
 
+.light-theme .text-white\/90,
 .light-theme .text-white\/80,
 .light-theme .text-white\/75,
-.light-theme .text-white\/70,
+.light-theme .text-white\/70 {
+  color: #1E293B !important;
+}
+
 .light-theme .text-white\/65,
-.light-theme .text-white\/60 {
+.light-theme .text-white\/60,
+.light-theme .text-white\/55 {
   color: #475569 !important;
 }
 
-.light-theme .text-white\/55,
 .light-theme .text-white\/50,
 .light-theme .text-white\/45,
-.light-theme .text-white\/40 {
+.light-theme .text-white\/40,
+.light-theme .text-white\/30 {
   color: #64748B !important;
 }
 
-/* Borders & Inputs in Light Mode */
-.light-theme .border-white\/5,
-.light-theme .border-white\/10,
-.light-theme .border-white\/15,
-.light-theme .border-white\/20,
-.light-theme .border-white\/25,
-.light-theme .border-white\/\[0\.08\] {
-  border-color: rgba(15, 23, 42, 0.08) !important;
+/* Gray & Slate Shading in Light Mode */
+.light-theme .text-gray-100,
+.light-theme .text-gray-200,
+.light-theme .text-gray-300,
+.light-theme .text-slate-200,
+.light-theme .text-slate-300 {
+  color: #1E293B !important;
 }
 
-.light-theme .bg-white\/5,
-.light-theme .bg-white\/10,
-.light-theme .bg-white\/\[0\.02\],
-.light-theme .bg-white\/\[0\.03\],
-.light-theme .bg-white\/\[0\.04\] {
+.light-theme .text-gray-400,
+.light-theme .text-gray-500,
+.light-theme .text-slate-400,
+.light-theme .text-slate-500 {
+  color: #475569 !important;
+}
+
+/* High-Contrast Neon Colors in Light Mode for Crystal-Clear Readability */
+.light-theme .text-\[\#00F5D4\],
+.light-theme .text-neon-cyan {
+  color: #0D9488 !important; /* Deep vibrant teal */
+}
+
+.light-theme .text-neon-lime {
+  color: #059669 !important; /* Rich readable emerald */
+}
+
+.light-theme .text-neon-magenta {
+  color: #E11D48 !important; /* Vibrant raspberry rose */
+}
+
+/* Borders & Inputs in Light Mode */
+.light-theme [class*="border-white/"],
+.light-theme .border-white {
+  border-color: rgba(15, 23, 42, 0.09) !important;
+}
+
+/* Subtle Translucent White Pills become Subtle Cool Slate in Light Mode */
+.light-theme [class*="bg-white/"] {
   background-color: rgba(15, 23, 42, 0.04) !important;
 }
 
@@ -207,6 +240,38 @@ input[type=range] {
   background-color: #FFFFFF !important;
   color: #0F172A !important;
   border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Tables in Light Mode */
+.light-theme table {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+.light-theme thead,
+.light-theme thead tr,
+.light-theme thead th {
+  background-color: #F8FAFC !important;
+  color: #475569 !important;
+  border-color: #E2E8F0 !important;
+}
+.light-theme tbody tr {
+  border-color: #E2E8F0 !important;
+  color: #1E293B !important;
+}
+.light-theme tbody tr:hover {
+  background-color: #F1F5F9 !important;
+}
+.light-theme tbody td {
+  border-color: #E2E8F0 !important;
+  color: #1E293B !important;
+}
+
+/* Recharts Tooltip in Light Mode */
+.light-theme .recharts-default-tooltip {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  color: #0F172A !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Footer in Light Mode */

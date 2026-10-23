@@ -1,8 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Layers } from 'lucide-react';
+import { useHardware } from '@/context/HardwareContext';
 
 export default function PricingTiers({ currentPredictionTier }) {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
+
   const tiers = [
     {
       id: 0,
@@ -15,9 +19,9 @@ export default function PricingTiers({ currentPredictionTier }) {
         'Single/dual optical sensor',
         'Sub-3,000 mAh battery capacity'
       ],
-      accent: 'text-sky-400',
-      borderAccent: 'border-sky-500/30',
-      bgPill: 'bg-sky-500/10'
+      accent: isLight ? 'text-sky-700' : 'text-sky-400',
+      borderAccent: isLight ? 'border-sky-300' : 'border-sky-500/30',
+      bgPill: isLight ? 'bg-sky-100 text-sky-800' : 'bg-sky-500/10 text-sky-400'
     },
     {
       id: 1,
@@ -30,9 +34,9 @@ export default function PricingTiers({ currentPredictionTier }) {
         'Multi-lens 48MP camera array',
         '3,500 – 4,500 mAh battery cell'
       ],
-      accent: 'text-[#00F5D4]',
-      borderAccent: 'border-[#00F5D4]/30',
-      bgPill: 'bg-[#00F5D4]/10'
+      accent: isLight ? 'text-emerald-700' : 'text-[#00F5D4]',
+      borderAccent: isLight ? 'border-emerald-300' : 'border-[#00F5D4]/30',
+      bgPill: isLight ? 'bg-emerald-100 text-emerald-800' : 'bg-[#00F5D4]/10 text-[#00F5D4]'
     },
     {
       id: 2,
@@ -45,9 +49,9 @@ export default function PricingTiers({ currentPredictionTier }) {
         '64MP+ High dynamic range lens',
         'Fast-charge 4,500+ mAh battery'
       ],
-      accent: 'text-purple-400',
-      borderAccent: 'border-purple-500/30',
-      bgPill: 'bg-purple-500/10'
+      accent: isLight ? 'text-purple-700' : 'text-purple-400',
+      borderAccent: isLight ? 'border-purple-300' : 'border-purple-500/30',
+      bgPill: isLight ? 'bg-purple-100 text-purple-800' : 'bg-purple-500/10 text-purple-400'
     },
     {
       id: 3,
@@ -60,9 +64,9 @@ export default function PricingTiers({ currentPredictionTier }) {
         'Studio-grade optics with OIS',
         '5,000+ mAh Silicon-Carbon cell'
       ],
-      accent: 'text-pink-400',
-      borderAccent: 'border-pink-500/30',
-      bgPill: 'bg-pink-500/10',
+      accent: isLight ? 'text-pink-700' : 'text-pink-400',
+      borderAccent: isLight ? 'border-pink-300' : 'border-pink-500/30',
+      bgPill: isLight ? 'bg-pink-100 text-pink-800' : 'bg-pink-500/10 text-pink-400',
       isHero: true
     }
   ];
@@ -79,8 +83,12 @@ export default function PricingTiers({ currentPredictionTier }) {
               whileHover={{ y: -4 }}
               className={`rounded-2xl p-5 sm:p-6 transition-all duration-300 relative flex flex-col justify-between ${
                 isSelected
-                  ? 'bg-[#0B0F19] text-white border-2 border-[#00F5D4] shadow-[0_0_20px_rgba(0,245,212,0.15)]'
-                  : 'bg-[#070A12]/80 text-white border border-white/10 hover:border-white/20'
+                  ? isLight
+                    ? 'bg-white text-slate-900 border-2 border-emerald-500 shadow-xl ring-2 ring-emerald-500/20'
+                    : 'bg-[#0B0F19] text-white border-2 border-[#00F5D4] shadow-[0_0_20px_rgba(0,245,212,0.15)]'
+                  : isLight
+                    ? 'bg-white text-slate-900 border border-slate-200/90 shadow-sm hover:border-slate-300 hover:shadow-md'
+                    : 'bg-[#070A12]/80 text-white border border-white/10 hover:border-white/20'
               }`}
             >
               {isSelected && (
@@ -91,24 +99,24 @@ export default function PricingTiers({ currentPredictionTier }) {
 
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className={`text-[11px] font-mono uppercase tracking-widest font-semibold px-2 py-0.5 rounded-md ${tier.bgPill} ${tier.accent}`}>
+                  <span className={`text-[11px] font-mono uppercase tracking-widest font-semibold px-2 py-0.5 rounded-md ${tier.bgPill}`}>
                     CLASS {tier.id}
                   </span>
-                  <span className="text-[11px] font-mono text-white/50">{tier.priceEquiv}</span>
+                  <span className={`text-[11px] font-mono ${isLight ? 'text-slate-600 font-medium' : 'text-white/50'}`}>{tier.priceEquiv}</span>
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-1 text-white">
+                <h3 className={`text-lg sm:text-xl font-bold tracking-tight mb-1 ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   {tier.title}
                 </h3>
-                <div className="text-xs text-white/50 mb-5 font-sans">
+                <div className={`text-xs mb-5 font-sans ${isLight ? 'text-slate-500' : 'text-white/50'}`}>
                   {tier.target}
                 </div>
 
                 <div className="space-y-2.5 mb-6">
                   {tier.specsList.map((spec, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs">
-                      <CheckCircle2 size={15} className={`${tier.accent} shrink-0 mt-0.5 opacity-80`} />
-                      <span className="text-white/70 font-sans">
+                      <CheckCircle2 size={15} className={`${tier.accent} shrink-0 mt-0.5 opacity-90`} />
+                      <span className={`font-sans leading-relaxed ${isLight ? 'text-slate-700' : 'text-white/70'}`}>
                         {spec}
                       </span>
                     </div>
@@ -116,7 +124,9 @@ export default function PricingTiers({ currentPredictionTier }) {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-white/10 mt-auto flex items-center justify-between text-[11px] font-mono text-white/45">
+              <div className={`pt-3 border-t mt-auto flex items-center justify-between text-[11px] font-mono ${
+                isLight ? 'border-slate-200 text-slate-500' : 'border-white/10 text-white/45'
+              }`}>
                 <span>Target:</span>
                 <span className={`font-semibold ${tier.accent}`}>
                   Tier {tier.id}

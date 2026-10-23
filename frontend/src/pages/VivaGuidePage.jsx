@@ -20,7 +20,8 @@ import {
 } from "lucide-react";
 
 export default function VivaGuidePage() {
-  const { inference } = useHardware();
+  const { inference, theme } = useHardware();
+  const isLight = theme === "light";
 
   const datasetFeatures = [
     { name: "battery_power", desc: "Total energy stored in mAh", type: "Integer (500 – 2000)", category: "Hardware", icon: BatteryCharging },
@@ -82,7 +83,9 @@ export default function VivaGuidePage() {
       </div>
 
       {/* ── 1. THE 4 CLASSIFICATION PRICING TIERS ── */}
-      <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-2 backdrop-blur-2xl">
+      <div className={`rounded-3xl border p-2 backdrop-blur-2xl ${
+        isLight ? "border-slate-200/80 bg-slate-100/60 shadow-xs" : "border-white/10 bg-white/[0.02]"
+      }`}>
         <PricingTiers currentPredictionTier={inference.consensusTier} />
       </div>
 
@@ -90,24 +93,32 @@ export default function VivaGuidePage() {
       <section className="space-y-6">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/40 bg-purple-500/10 px-3.5 py-1 font-mono text-xs uppercase tracking-widest text-purple-400">
+            <div className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1 font-mono text-xs uppercase tracking-widest ${
+              isLight ? "border-purple-300 bg-purple-50 text-purple-800" : "border-purple-500/40 bg-purple-500/10 text-purple-400"
+            }`}>
               <Database className="h-3.5 w-3.5" />
               <span>Dataset Specification</span>
             </div>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h2 className={`mt-2 text-2xl font-bold tracking-tight sm:text-3xl ${
+              isLight ? "text-slate-900" : "text-white"
+            }`}>
               Silicon Hardware Feature Matrix (20 Features + Target)
             </h2>
-            <p className="mt-1 text-xs text-white/60 font-sans">
+            <p className={`mt-1 text-xs font-sans ${isLight ? "text-slate-600" : "text-white/60"}`}>
               Complete hardware schema calibrated across supervised classifiers and unsupervised manifold projections.
             </p>
           </div>
 
           <div className="flex items-center gap-3 font-mono text-xs">
-            <div className="rounded-xl border border-white/10 bg-black/40 px-3 py-1.5 text-white/70">
-              <span className="text-white/40">FEATURES:</span> <strong className="text-[#00F5D4]">20 HARDWARE</strong>
+            <div className={`rounded-xl border px-3 py-1.5 ${
+              isLight ? "border-slate-200 bg-white text-slate-700 shadow-xs" : "border-white/10 bg-black/40 text-white/70"
+            }`}>
+              <span className={isLight ? "text-slate-500" : "text-white/40"}>FEATURES:</span> <strong className={isLight ? "text-emerald-700" : "text-[#00F5D4]"}>20 HARDWARE</strong>
             </div>
-            <div className="rounded-xl border border-white/10 bg-black/40 px-3 py-1.5 text-white/70">
-              <span className="text-white/40">TARGET:</span> <strong className="text-[#FF2A85]">4 TIERS (0-3)</strong>
+            <div className={`rounded-xl border px-3 py-1.5 ${
+              isLight ? "border-slate-200 bg-white text-slate-700 shadow-xs" : "border-white/10 bg-black/40 text-white/70"
+            }`}>
+              <span className={isLight ? "text-slate-500" : "text-white/40"}>TARGET:</span> <strong className={isLight ? "text-pink-700" : "text-[#FF2A85]"}>4 TIERS (0-3)</strong>
             </div>
           </div>
         </div>
@@ -117,21 +128,29 @@ export default function VivaGuidePage() {
           {datasetFeatures.map((f) => {
             const Icon = f.icon;
             return (
-              <div key={f.name} className="rounded-2xl border border-white/10 bg-[#080B14] p-4 space-y-2">
+              <div key={f.name} className={`rounded-2xl border p-4 space-y-2 ${
+                isLight ? "border-slate-200 bg-white text-slate-900 shadow-sm" : "border-white/10 bg-[#080B14] text-white"
+              }`}>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 font-mono font-bold text-[#00F5D4] text-xs">
-                    <Icon className="h-4 w-4 text-white/50" />
+                  <div className={`flex items-center gap-2 font-mono font-bold text-xs ${
+                    isLight ? "text-emerald-700" : "text-[#00F5D4]"
+                  }`}>
+                    <Icon className={`h-4 w-4 ${isLight ? "text-slate-500" : "text-white/50"}`} />
                     <span>{f.name}</span>
                   </div>
-                  <span className="rounded-md bg-white/5 px-2 py-0.5 border border-white/10 text-[10px] font-mono text-white/60">
+                  <span className={`rounded-md px-2 py-0.5 border text-[10px] font-mono ${
+                    isLight ? "bg-slate-100 border-slate-200 text-slate-700" : "bg-white/5 border-white/10 text-white/60"
+                  }`}>
                     {f.category}
                   </span>
                 </div>
-                <p className="text-xs text-white/80 font-sans leading-relaxed">
+                <p className={`text-xs font-sans leading-relaxed ${isLight ? "text-slate-700" : "text-white/80"}`}>
                   {f.desc}
                 </p>
-                <div className="font-mono text-[11px] text-white/50 pt-1 border-t border-white/5">
-                  Range: <span className="text-white/80">{f.type}</span>
+                <div className={`font-mono text-[11px] pt-1 border-t ${
+                  isLight ? "border-slate-100 text-slate-500" : "border-white/5 text-white/50"
+                }`}>
+                  Range: <span className={isLight ? "text-slate-800 font-semibold" : "text-white/80"}>{f.type}</span>
                 </div>
               </div>
             );
@@ -139,9 +158,13 @@ export default function VivaGuidePage() {
         </div>
 
         {/* Desktop View: Full High-Density Table */}
-        <div className="hidden md:block overflow-x-auto rounded-3xl border border-white/10 bg-black/45">
+        <div className={`hidden md:block overflow-x-auto rounded-3xl border shadow-sm ${
+          isLight ? "border-slate-200 bg-white" : "border-white/10 bg-black/45"
+        }`}>
           <table className="w-full text-left font-mono text-xs">
-            <thead className="border-b border-white/10 bg-white/5 text-white/50 uppercase text-[10px]">
+            <thead className={`border-b uppercase text-[10px] ${
+              isLight ? "border-slate-200 bg-slate-50 text-slate-600 font-semibold" : "border-white/10 bg-white/5 text-white/50"
+            }`}>
               <tr>
                 <th className="py-3 px-4">Feature Name</th>
                 <th className="py-3 px-4">Category</th>
@@ -149,24 +172,32 @@ export default function VivaGuidePage() {
                 <th className="py-3 px-4">Physical Description</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-white/80">
+            <tbody className={`divide-y ${
+              isLight ? "divide-slate-100 text-slate-800" : "divide-white/5 text-white/80"
+            }`}>
               {datasetFeatures.map((f) => {
                 const Icon = f.icon;
                 return (
-                  <tr key={f.name} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3 px-4 font-bold text-[#00F5D4]">
+                  <tr key={f.name} className={`transition-colors ${
+                    isLight ? "hover:bg-slate-50" : "hover:bg-white/[0.02]"
+                  }`}>
+                    <td className={`py-3 px-4 font-bold ${
+                      isLight ? "text-emerald-700" : "text-[#00F5D4]"
+                    }`}>
                       <div className="flex items-center gap-2">
-                        <Icon className="h-3.5 w-3.5 text-white/40" />
+                        <Icon className={`h-3.5 w-3.5 ${isLight ? "text-slate-500" : "text-white/40"}`} />
                         <span>{f.name}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-white/60">
-                      <span className="rounded-md bg-white/5 px-2 py-0.5 border border-white/10 text-[11px]">
+                    <td className={isLight ? "py-3 px-4 text-slate-600" : "py-3 px-4 text-white/60"}>
+                      <span className={`rounded-md px-2 py-0.5 border text-[11px] font-mono ${
+                        isLight ? "bg-slate-100 border-slate-200 text-slate-700" : "bg-white/5 border-white/10 text-white/60"
+                      }`}>
                         {f.category}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-white/75">{f.type}</td>
-                    <td className="py-3 px-4 text-white/90 font-sans">{f.desc}</td>
+                    <td className={`py-3 px-4 ${isLight ? "text-slate-600" : "text-white/75"}`}>{f.type}</td>
+                    <td className={`py-3 px-4 font-sans ${isLight ? "text-slate-800" : "text-white/90"}`}>{f.desc}</td>
                   </tr>
                 );
               })}
