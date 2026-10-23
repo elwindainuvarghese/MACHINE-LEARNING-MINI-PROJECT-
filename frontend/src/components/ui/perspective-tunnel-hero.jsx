@@ -6,6 +6,7 @@ import {
   useSpring,
 } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
+import { useHardware } from "@/context/HardwareContext";
 import {
   Cpu,
   Sparkles,
@@ -132,6 +133,7 @@ function TunnelCard({
   total,
   stage,
   onCardClick,
+  isLight = false,
 }) {
   const staggerSpan = 0.55;
   const start = (card.index / total) * (1 - staggerSpan);
@@ -178,21 +180,31 @@ function TunnelCard({
       className="pointer-events-auto absolute left-1/2 top-1/2 aspect-[4/5] will-change-transform select-none cursor-pointer"
     >
       <div
-        className="group relative h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0B0F19]/85 p-3.5 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-white/30 hover:scale-105"
+        className={`group relative h-full w-full overflow-hidden rounded-2xl border p-3.5 backdrop-blur-xl transition-all duration-300 hover:scale-105 ${
+          isLight
+            ? "border-slate-200/90 bg-white/95 shadow-[0_12px_36px_rgba(15,23,42,0.1)] hover:border-slate-400/60"
+            : "border-white/10 bg-[#0B0F19]/85 shadow-2xl hover:border-white/30"
+        }`}
         style={{
-          boxShadow: `0 10px 30px rgba(0,0,0,0.6), 0 0 20px ${card.item.accent}15`,
+          boxShadow: isLight
+            ? `0 12px 30px rgba(15,23,42,0.08), 0 0 20px ${card.item.accent}20`
+            : `0 10px 30px rgba(0,0,0,0.6), 0 0 20px ${card.item.accent}15`,
         }}
       >
-        <div className="relative h-[58%] w-full overflow-hidden rounded-xl bg-black/40">
+        <div className={`relative h-[58%] w-full overflow-hidden rounded-xl ${isLight ? "bg-slate-100" : "bg-black/40"}`}>
           <img
             src={card.item.src}
             alt={card.item.title}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent" />
+          <div className={`absolute inset-0 bg-gradient-to-t ${isLight ? "from-white/95 via-transparent to-transparent" : "from-[#0B0F19] via-transparent to-transparent"}`} />
           <span
-            className="absolute top-2 left-2 rounded-full border border-white/20 bg-black/70 px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-wider backdrop-blur-md"
+            className={`absolute top-2 left-2 rounded-full border px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-wider backdrop-blur-md ${
+              isLight
+                ? "border-slate-200 bg-white/90 text-slate-800 shadow-sm"
+                : "border-white/20 bg-black/70"
+            }`}
             style={{ color: card.item.accent }}
           >
             {card.item.badge}
@@ -201,17 +213,25 @@ function TunnelCard({
 
         <div className="mt-2.5 flex flex-col justify-between">
           <div>
-            <h4 className="text-xs sm:text-sm font-bold tracking-tight text-white group-hover:text-[#00F5D4] transition-colors truncate">
+            <h4 className={`text-xs sm:text-sm font-bold tracking-tight transition-colors truncate ${
+              isLight ? "text-slate-900 group-hover:text-emerald-600" : "text-white group-hover:text-[#00F5D4]"
+            }`}>
               {card.item.title}
             </h4>
-            <p className="mt-0.5 text-[10px] sm:text-[11px] text-white/55 line-clamp-2 leading-relaxed">
+            <p className={`mt-0.5 text-[10px] sm:text-[11px] line-clamp-2 leading-relaxed ${
+              isLight ? "text-slate-600 font-medium" : "text-white/55"
+            }`}>
               {card.item.subtitle}
             </p>
           </div>
 
-          <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2 text-[10px] font-mono text-white/40">
+          <div className={`mt-2 flex items-center justify-between border-t pt-2 text-[10px] font-mono ${
+            isLight ? "border-slate-200 text-slate-500" : "border-white/10 text-white/40"
+          }`}>
             <span>INDEX 0{card.index + 1}</span>
-            <span className="text-[#00F5D4] group-hover:translate-x-0.5 transition-transform">
+            <span className={`group-hover:translate-x-0.5 transition-transform font-medium ${
+              isLight ? "text-emerald-600" : "text-[#00F5D4]"
+            }`}>
               Explore →
             </span>
           </div>
@@ -228,6 +248,8 @@ export default function PerspectiveTunnelHero({
   onSelectCard,
   onJumpToSection,
 }) {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
   const containerRef = useRef(null);
   const reduce = useReducedMotion();
 
@@ -343,43 +365,67 @@ export default function PerspectiveTunnelHero({
   return (
     <div
       ref={containerRef}
-      className="relative min-h-[92svh] md:h-[100svh] w-full overflow-hidden bg-[#05070B] text-white select-none flex items-center justify-center pt-16 md:pt-0"
+      className={`relative min-h-[92svh] md:h-[100svh] w-full overflow-hidden select-none flex items-center justify-center pt-16 md:pt-0 transition-colors duration-300 ${
+        isLight ? "bg-[#F4F5F8] text-slate-900" : "bg-[#05070B] text-white"
+      }`}
       style={{
         perspective: stage.isMobile ? "800px" : "1200px",
         transformStyle: "preserve-3d",
       }}
     >
       {/* Background Architectural Grid & Subtle Radial Atmosphere */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_50%,transparent_100%)] opacity-40" />
+      <div className={`pointer-events-none absolute inset-0 [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_50%,transparent_100%)] ${
+        isLight
+          ? "bg-[radial-gradient(#94a3b8_1px,transparent_1px)] opacity-35"
+          : "bg-[radial-gradient(#1e293b_1px,transparent_1px)] opacity-40"
+      }`} />
       <div
         className="pointer-events-none absolute inset-0 transition-all duration-700"
         style={{
-          background: `radial-gradient(circle at center, ${activeAccent}14 0%, rgba(15,23,42,0.08) 45%, transparent 75%)`,
+          background: isLight
+            ? `radial-gradient(circle at center, ${activeAccent}18 0%, rgba(241,245,249,0.4) 55%, transparent 80%)`
+            : `radial-gradient(circle at center, ${activeAccent}14 0%, rgba(15,23,42,0.08) 45%, transparent 75%)`,
         }}
       />
 
       {/* Concentric Guide Rings */}
-      <div className="pointer-events-none absolute h-[44vmin] w-[44vmin] rounded-full border border-white/[0.06]" />
-      <div className="pointer-events-none absolute h-[72vmin] w-[72vmin] rounded-full border border-dashed border-white/[0.04]" />
+      <div className={`pointer-events-none absolute h-[44vmin] w-[44vmin] rounded-full border ${
+        isLight ? "border-slate-300/40" : "border-white/[0.06]"
+      }`} />
+      <div className={`pointer-events-none absolute h-[72vmin] w-[72vmin] rounded-full border border-dashed ${
+        isLight ? "border-slate-300/30" : "border-white/[0.04]"
+      }`} />
 
       {/* Central Hero Typography */}
       <motion.div
         style={{ scale: titleScale, opacity: titleOpacity }}
         className="z-10 flex flex-col items-center text-center px-6 max-w-3xl"
       >
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1 text-xs font-mono uppercase tracking-widest text-white/70 backdrop-blur-xl mb-4">
+        <div className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-xs font-mono uppercase tracking-widest backdrop-blur-xl mb-4 shadow-sm ${
+          isLight
+            ? "border-slate-200 bg-white/80 text-slate-700"
+            : "border-white/10 bg-white/[0.03] text-white/70"
+        }`}>
           <span className="h-1.5 w-1.5 rounded-full bg-[#00F5D4] animate-pulse" />
           <span>Kaggle Dataset · 2,000 Hardware Profiles</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
+        <h1 className={`text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] ${
+          isLight ? "text-slate-900" : "text-white"
+        }`}>
           Mobile Price <br />
-          <span className="bg-gradient-to-r from-white via-neutral-200 to-white/60 bg-clip-text text-transparent">
+          <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
+            isLight
+              ? "from-slate-900 via-slate-700 to-slate-500"
+              : "from-white via-neutral-200 to-white/60"
+          }`}>
             Architecture Suite
           </span>
         </h1>
 
-        <p className="mt-4 max-w-xl text-xs sm:text-sm md:text-base text-white/60 font-sans leading-relaxed">
+        <p className={`mt-4 max-w-xl text-xs sm:text-sm md:text-base font-sans leading-relaxed ${
+          isLight ? "text-slate-600" : "text-white/60"
+        }`}>
           High-performance machine learning suite evaluating 8 supervised algorithms,
           continuous regressors, 3D manifold topologies, and secondary market valuations.
         </p>
@@ -395,7 +441,11 @@ export default function PerspectiveTunnelHero({
           
           <button
             onClick={handleScrollToContent}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-xs font-mono text-white/80 backdrop-blur-md transition hover:border-white/30 hover:text-white cursor-pointer"
+            className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-xs font-mono backdrop-blur-md transition cursor-pointer shadow-sm ${
+              isLight
+                ? "border-slate-300 bg-white/90 text-slate-700 hover:border-slate-400 hover:text-slate-900"
+                : "border-white/15 bg-white/5 text-white/80 hover:border-white/30 hover:text-white"
+            }`}
           >
             <span>Explore Modules</span>
             <ChevronDown className="h-3.5 w-3.5" />
@@ -407,13 +457,15 @@ export default function PerspectiveTunnelHero({
       <div className="absolute bottom-6 z-30 flex flex-col items-center gap-2">
         <motion.div
           style={{ opacity: promptOpacity }}
-          className="pointer-events-none flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/40"
+          className={`pointer-events-none flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] ${
+            isLight ? "text-slate-500" : "text-white/40"
+          }`}
         >
           <span>{stage.isMobile ? "Swipe Up to Fly · Tap to Load" : "Scroll to Navigate · Click to Select"}</span>
           <ArrowDown className="h-3 w-3 text-[#00F5D4] animate-bounce" />
         </motion.div>
         
-        <div className="h-1 w-36 overflow-hidden rounded-full bg-white/10">
+        <div className={`h-1 w-36 overflow-hidden rounded-full ${isLight ? "bg-slate-200" : "bg-white/10"}`}>
           <motion.div
             className="h-full rounded-full"
             style={{ width: progressBarWidth, backgroundColor: activeAccent }}
@@ -435,6 +487,7 @@ export default function PerspectiveTunnelHero({
             total={tunnelCards.length}
             stage={stage}
             onCardClick={onSelectCard}
+            isLight={isLight}
           />
         ))}
       </div>

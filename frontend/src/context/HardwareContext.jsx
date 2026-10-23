@@ -184,6 +184,32 @@ export function HardwareProvider({ children }) {
   const [benchmarksData, setBenchmarksData] = useState(null);
   const [projectionsData, setProjectionsData] = useState(null);
 
+  // Global Theme Management: "dark" (Obsidian) | "light" (Titanium Studio)
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("specwarp_theme");
+      if (saved) return saved;
+    }
+    return "dark";
+  });
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("specwarp_theme", theme);
+      if (theme === "light") {
+        document.documentElement.classList.add("light-theme");
+        document.documentElement.classList.remove("dark-theme");
+      } else {
+        document.documentElement.classList.add("dark-theme");
+        document.documentElement.classList.remove("light-theme");
+      }
+    }
+  }, [theme]);
+
   // Load offline or live benchmarks & projections on mount
   useEffect(() => {
     async function loadArtifacts() {
@@ -376,6 +402,9 @@ export function HardwareProvider({ children }) {
         projectionsData,
         inference,
         activeTierMeta,
+        theme,
+        setTheme,
+        toggleTheme,
       }}
     >
       {children}

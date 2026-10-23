@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { HardwareProvider } from "./context/HardwareContext";
+import { HardwareProvider, useHardware } from "./context/HardwareContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -47,33 +47,48 @@ function ScrollToTop() {
   return null;
 }
 
+function AppContent() {
+  const { theme } = useHardware();
+  const isLight = theme === "light";
+
+  return (
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        isLight
+          ? "bg-[#F4F5F8] text-[#0F172A] selection:bg-[#00F5D4] selection:text-black light-theme"
+          : "bg-[#05070B] text-[#F1EFEA] selection:bg-[#00F5D4] selection:text-black dark-theme"
+      }`}
+    >
+      {/* Global Sticky Glowing Navbar */}
+      <Navbar />
+
+      {/* Route Outlet */}
+      <main className="min-h-[calc(100vh-140px)]">
+        <ErrorBoundary name="Route Outlet">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/predict" element={<PredictorPage />} />
+            <Route path="/arena" element={<ArenaPage />} />
+            <Route path="/manifold" element={<ManifoldPage />} />
+            <Route path="/resale" element={<ResalePage />} />
+            <Route path="/guide" element={<VivaGuidePage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </ErrorBoundary>
+      </main>
+
+      {/* Global Footer */}
+      <Footer />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <HardwareProvider>
         <ScrollToTop />
-        <div className="min-h-screen bg-[#05070B] text-[#F1EFEA] selection:bg-[#00F5D4] selection:text-black">
-          {/* Global Sticky Glowing Navbar */}
-          <Navbar />
-
-          {/* Route Outlet */}
-          <main className="min-h-[calc(100vh-140px)]">
-            <ErrorBoundary name="Route Outlet">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/predict" element={<PredictorPage />} />
-                <Route path="/arena" element={<ArenaPage />} />
-                <Route path="/manifold" element={<ManifoldPage />} />
-                <Route path="/resale" element={<ResalePage />} />
-                <Route path="/guide" element={<VivaGuidePage />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </ErrorBoundary>
-          </main>
-
-          {/* Global Footer */}
-          <Footer />
-        </div>
+        <AppContent />
       </HardwareProvider>
     </BrowserRouter>
   );

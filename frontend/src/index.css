@@ -48,7 +48,6 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
 body {
@@ -62,7 +61,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle architectural ambient backdrop (lightweight, zero frame drops) */
+/* Subtle architectural ambient backdrop */
 .mesh-bg {
   position: fixed;
   inset: 0;
@@ -93,4 +92,133 @@ body {
 input[type=range] {
   accent-color: #00f5d4;
   touch-action: pan-x;
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   LIGHT MODE: ARCHITECTURAL TITANIUM STUDIO OVERRIDES
+   Clean, Apple / Teenage Engineering high-contrast light theme
+   ──────────────────────────────────────────────────────────────────── */
+.light-theme {
+  background-color: #F4F5F8 !important;
+  color: #0F172A !important;
+}
+
+.light-theme body {
+  background-color: #F4F5F8 !important;
+  color: #0F172A !important;
+}
+
+.light-theme ::-webkit-scrollbar-track {
+  background: #F4F5F8;
+}
+.light-theme ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+.light-theme ::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.light-theme .mesh-bg {
+  background: 
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(56, 189, 248, 0.09), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 80% 80%, rgba(139, 92, 246, 0.06), transparent 60%);
+}
+
+.light-theme .glass-panel,
+.light-theme .glass-dark {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: #0F172A !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Cards & Containers in Light Mode */
+.light-theme .bg-\[\#04060A\],
+.light-theme .bg-\[\#05070B\],
+.light-theme .bg-\[\#06080E\],
+.light-theme .bg-\[\#070A11\],
+.light-theme .bg-\[\#070A12\],
+.light-theme .bg-\[\#080B12\],
+.light-theme .bg-\[\#080B14\],
+.light-theme .bg-\[\#090D17\],
+.light-theme .bg-\[\#0B0F19\],
+.light-theme .bg-black\/40,
+.light-theme .bg-black\/50,
+.light-theme .bg-black\/60,
+.light-theme .bg-black\/70,
+.light-theme .bg-black\/80 {
+  background-color: #FFFFFF !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: #0F172A;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* Text Overrides in Light Mode */
+.light-theme .text-white {
+  color: #0F172A !important;
+}
+
+.light-theme .text-white\/80,
+.light-theme .text-white\/75,
+.light-theme .text-white\/70,
+.light-theme .text-white\/65,
+.light-theme .text-white\/60 {
+  color: #475569 !important;
+}
+
+.light-theme .text-white\/55,
+.light-theme .text-white\/50,
+.light-theme .text-white\/45,
+.light-theme .text-white\/40 {
+  color: #64748B !important;
+}
+
+/* Borders & Inputs in Light Mode */
+.light-theme .border-white\/5,
+.light-theme .border-white\/10,
+.light-theme .border-white\/15,
+.light-theme .border-white\/20,
+.light-theme .border-white\/25,
+.light-theme .border-white\/\[0\.08\] {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+.light-theme .bg-white\/5,
+.light-theme .bg-white\/10,
+.light-theme .bg-white\/\[0\.02\],
+.light-theme .bg-white\/\[0\.03\],
+.light-theme .bg-white\/\[0\.04\] {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+}
+
+.light-theme select {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+.light-theme select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+.light-theme input[type="text"],
+.light-theme input[type="number"] {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Footer in Light Mode */
+.light-theme footer {
+  background-color: #FFFFFF !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+.light-theme footer .text-white {
+  color: #0F172A !important;
+}
+.light-theme footer .text-white\/55,
+.light-theme footer .text-white\/45,
+.light-theme footer .text-white\/40 {
+  color: #64748B !important;
 }
