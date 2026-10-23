@@ -63,7 +63,11 @@ export default function DepreciationForecaster({ onApplySpecsToClassifier }) {
   const brands = ['All', 'Samsung', 'Apple', 'Xiaomi', 'OnePlus', 'Google Pixel', 'Realme', 'Motorola', 'Vivo / iQOO'];
   const filteredCatalog = selectedBrand === 'All' 
     ? catalog 
-    : catalog.filter(p => p.brand === selectedBrand || (selectedBrand.includes('Vivo') && p.brand.includes('Vivo')));
+    : catalog.filter(p => 
+        p.brand === selectedBrand || 
+        (selectedBrand.includes('Google') && p.brand.includes('Google')) ||
+        (selectedBrand.includes('Vivo') && p.brand.includes('Vivo'))
+      );
 
   const currentPhone = catalog.find(p => p.id === selectedPhoneId) || catalog[0];
 
@@ -71,9 +75,9 @@ export default function DepreciationForecaster({ onApplySpecsToClassifier }) {
   const multiBrandTrajectory = Array.from({ length: 13 }, (_, m) => {
     const decayRates = {
       Apple: 0.015,
+      Google: 0.024,
       Samsung: 0.023,
       OnePlus: 0.025,
-      Google: 0.027,
       Xiaomi: 0.029,
       Realme: 0.031
     };
@@ -81,6 +85,7 @@ export default function DepreciationForecaster({ onApplySpecsToClassifier }) {
       month: `M${m}`,
       month_num: m,
       Apple: Math.round(Math.exp(-decayRates.Apple * m) * (m === 0 ? 100 : 94)),
+      "Google Pixel": Math.round(Math.exp(-decayRates.Google * m) * (m === 0 ? 100 : 94)),
       Samsung: Math.round(Math.exp(-decayRates.Samsung * m) * (m === 0 ? 100 : 94)),
       OnePlus: Math.round(Math.exp(-decayRates.OnePlus * m) * (m === 0 ? 100 : 94)),
       Xiaomi: Math.round(Math.exp(-decayRates.Xiaomi * m) * (m === 0 ? 100 : 94)),
@@ -349,19 +354,32 @@ export default function DepreciationForecaster({ onApplySpecsToClassifier }) {
                 <div>
                   <div className="flex items-center justify-between text-xs font-mono text-gray-300 mb-2 font-bold">
                     <span>Side-by-Side Brand Value Retention Rate (%):</span>
-                    <span className="text-neon-magenta">Apple vs Samsung vs Xiaomi vs OnePlus</span>
+                    <span className="text-neon-cyan">Apple vs Google vs Samsung vs OnePlus vs Xiaomi</span>
                   </div>
                   <div className="h-[220px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={multiBrandTrajectory} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <XAxis dataKey="month" stroke="#9ca3af" tick={{ fill: '#9ca3af', fontSize: 10 }} />
                         <YAxis stroke="#9ca3af" domain={[40, 100]} tick={{ fill: '#9ca3af', fontSize: 10 }} unit="%" />
-                        <Tooltip />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#090D18',
+                            borderColor: 'rgba(255, 255, 255, 0.15)',
+                            borderRadius: '16px',
+                            boxShadow: '0 12px 30px rgba(0,0,0,0.85)',
+                            padding: '12px 16px',
+                            fontSize: '12px',
+                            fontFamily: 'monospace',
+                            color: '#fff'
+                          }}
+                          itemStyle={{ padding: '2px 0' }}
+                        />
                         <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'monospace' }} />
-                        <Line type="monotone" dataKey="Apple" stroke="#00ffff" strokeWidth={2.5} dot={false} />
-                        <Line type="monotone" dataKey="Samsung" stroke="#39ff14" strokeWidth={2.5} dot={false} />
-                        <Line type="monotone" dataKey="OnePlus" stroke="#ff00ff" strokeWidth={2} dot={false} />
-                        <Line type="monotone" dataKey="Xiaomi" stroke="#f59e0b" strokeWidth={2} dot={false} />
+                        <Line type="monotone" dataKey="Apple" stroke="#00F5D4" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="Google Pixel" stroke="#38BDF8" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="Samsung" stroke="#10B981" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="OnePlus" stroke="#EC4899" strokeWidth={2} dot={false} />
+                        <Line type="monotone" dataKey="Xiaomi" stroke="#F59E0B" strokeWidth={2} dot={false} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
